@@ -35,6 +35,7 @@ export const TeacherDashboard: React.FC<TeacherDashboardProps> = ({
   const [records, setRecords] = useState<Record<string, StudentRecord>>({});
   const [searchQuery, setSearchQuery] = useState('');
   const [filterMode, setFilterMode] = useState<'all' | 'full_points' | 'in_progress'>('all');
+  const [passInput, setPassInput] = useState(getVideoPassword() || '');
 
   const refresh = () => {
     setRecords(loadAllStudentRecords());
@@ -101,8 +102,11 @@ export const TeacherDashboard: React.FC<TeacherDashboardProps> = ({
               type="password"
               placeholder="Video Password..."
               className="bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white placeholder-slate-500 focus:border-blue-500 outline-none"
-              value={getVideoPassword() || ''}
-              onChange={(e) => setVideoPassword(e.target.value)}
+              value={passInput}
+              onChange={(e) => {
+                setPassInput(e.target.value);
+                setVideoPassword(e.target.value);
+              }}
             />
             <span className="text-[10px] text-slate-400">Set Video Pass</span>
           </div>
