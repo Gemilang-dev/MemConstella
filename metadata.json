@@ -1,0 +1,6 @@
+{
+  "name": "AstroRegister Quest - Game Rasi Bintang & Register CPU",
+  "description": "Interactive educational game combining cosmic glowing constellation memory with CPU register missions (PC, IR, MAR, MDR, ACC) across 4 student rooms (Room A, Room B, Room C, Room D).",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
