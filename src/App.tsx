@@ -5,6 +5,7 @@ import { HeaderNavigation } from './components/HeaderNavigation';
 import { RoomStation } from './components/RoomStation';
 import { TeacherDashboard } from './components/TeacherDashboard';
 import { Home } from './components/Home';
+import { GameSetup } from './components/GameSetup';
 import { CustomGameBuilder } from './components/CustomGameBuilder';
 import { PlayCustomGames } from './components/PlayCustomGames';
 import { listenToSync } from './utils/storage';
@@ -19,7 +20,8 @@ export default function App() {
 
   // Derive currentArea from location pathname
   let currentArea: AppArea = 'home';
-  if (location.pathname.includes('/room/a')) currentArea = 'room_a';
+  if (location.pathname.includes('/setup')) currentArea = 'setup';
+  else if (location.pathname.includes('/room/a')) currentArea = 'room_a';
   else if (location.pathname.includes('/room/b')) currentArea = 'room_b';
   else if (location.pathname.includes('/room/c')) currentArea = 'room_c';
   else if (location.pathname.includes('/room/d')) currentArea = 'room_d';
@@ -46,6 +48,7 @@ export default function App() {
     
     // Map AppArea to routes
     if (area === 'home') navigate('/');
+    else if (area === 'setup') navigate('/setup');
     else if (area === 'room_a') navigate('/room/a');
     else if (area === 'room_b') navigate('/room/b');
     else if (area === 'room_c') navigate('/room/c');
@@ -66,7 +69,7 @@ export default function App() {
   return (
     <div className="flex flex-col min-h-screen bg-[#020617] text-slate-100 selection:bg-blue-500 selection:text-white">
       {/* Top Navigation Bar */}
-      {currentArea !== 'home' && (
+      {currentArea !== 'home' && currentArea !== 'setup' && (
         <HeaderNavigation
           currentArea={currentArea}
           onSelectArea={handleSelectArea}
@@ -80,6 +83,7 @@ export default function App() {
       <main className="flex-1 flex flex-col relative w-full overflow-hidden">
         <Routes>
           <Route path="/" element={<Home onStart={handleSelectArea} />} />
+          <Route path="/setup" element={<GameSetup onBack={() => handleSelectArea('home')} onStart={handleSelectArea} />} />
           
           <Route path="/room/a" element={
             <RoomStation roomNumber={1} onChangeRoom={handleGoToRoom} onQuizActiveChange={setIsQuizActive} />

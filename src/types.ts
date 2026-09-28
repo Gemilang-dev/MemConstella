@@ -91,4 +91,4 @@ export interface StudentRecord {
   registeredAt: number;
 }
 
-export type AppArea = 'home' | 'room_a' | 'room_b' | 'room_c' | 'room_d' | 'teacher_dashboard' | 'custom_builder' | 'play_custom';
+export type AppArea = 'home' | 'setup' | 'room_a' | 'room_b' | 'room_c' | 'room_d' | 'teacher_dashboard' | 'custom_builder' | 'play_custom';

@@ -1,7 +1,7 @@
 import { StudentRecord, StudentRoomAttempt, RoomNumber, ROOM_MAPPING } from '../types';
-import { STUDENT_ROSTER } from '../data/questions';
 
 const STORAGE_KEY = 'astro_register_roster_v3';
+const ROSTER_KEY = 'astro_student_roster';
 const CHANNEL_NAME = 'astro_register_sync_channel';
 
 let channel: BroadcastChannel | null = null;
@@ -14,13 +14,29 @@ try {
   channel = null;
 }
 
+export function loadStudentRoster(): string[] {
+  if (typeof window === 'undefined') return [];
+  try {
+    const raw = localStorage.getItem(ROSTER_KEY);
+    return raw ? JSON.parse(raw) : [];
+  } catch {
+    return [];
+  }
+}
+
+export function saveStudentRoster(names: string[]) {
+  if (typeof window === 'undefined') return;
+  localStorage.setItem(ROSTER_KEY, JSON.stringify(names));
+}
+
 export function loadAllStudentRecords(): Record<string, StudentRecord> {
   if (typeof window === 'undefined') return {};
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) {
       const initial: Record<string, StudentRecord> = {};
-      STUDENT_ROSTER.forEach((name) => {
+      const roster = loadStudentRoster();
+      roster.forEach((name) => {
         initial[name] = {
           id: name.toLowerCase().replace(/[^a-z0-9]/g, '-'),
           name,
@@ -36,6 +52,14 @@ export function loadAllStudentRecords(): Record<string, StudentRecord> {
     return JSON.parse(raw);
   } catch {
     return {};
+  }
+}
+
+export function resetGameRecords() {
+  if (typeof window === 'undefined') return;
+  localStorage.removeItem(STORAGE_KEY);
+  if (channel) {
+    channel.postMessage({ type: 'SYNC_UPDATE' });
   }
 }
 
@@ -172,13 +196,13 @@ export interface CustomGamePackage {
   id: string;
   title: string;
   terms: Array<{ code: string; name: string }>;
-  rooms: Record<number, {
+  rooms: Record<number, Array<{
     targetTerm: string;
     title: string;
     storyScenario: string;
     questionText: string;
     roleHint: string;
-  }>;
+  }>>;
 }
 
 export function loadCustomGames(): CustomGamePackage[] {

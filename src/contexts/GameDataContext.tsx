@@ -40,7 +40,15 @@ export const GameDataProvider: React.FC<{ children: ReactNode }> = ({ children }
     };
 
     const customGetQuestion = (studentName: string, roomNumber: number) => {
-      const template = customData.roomTemplates[roomNumber];
+      let template = customData.roomTemplates[roomNumber];
+      if (Array.isArray(template)) {
+        let hash = 0;
+        for (let i = 0; i < studentName.length; i++) {
+          hash = studentName.charCodeAt(i) + ((hash << 5) - hash);
+        }
+        const index = Math.abs(hash) % template.length;
+        template = template[index];
+      }
       const constellation = customGetConstellation(studentName, roomNumber);
       const regInfo = customData.registers[template.targetRegister];
       const targetStar = constellation.stars.find((s: any) => s.assignedRegister === template.targetRegister);

@@ -12,7 +12,7 @@ export const Home: React.FC<HomeProps> = ({ onStart }) => {
 
   const startDefault = () => {
     resetToDefault();
-    onStart('teacher_dashboard');
+    onStart('setup');
   };
 
   return (

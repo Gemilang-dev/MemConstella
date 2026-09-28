@@ -50,21 +50,23 @@ export const PlayCustomGames: React.FC<PlayCustomGamesProps> = ({ onBack, onStar
     });
 
     [1, 2, 3, 4].forEach((rNum) => {
-      const roomData = game.rooms[rNum] || {
+      const roomDataArr = game.rooms[rNum];
+      const roomQuestions = (roomDataArr && roomDataArr.length > 0) ? roomDataArr : [{
         targetTerm: game.terms[0]?.code || '',
         title: 'Unconfigured Room',
         storyScenario: 'No scenario provided.',
         questionText: 'No question provided.',
         roleHint: ''
-      };
-      customRoomTemplates[rNum] = {
-        targetRegister: roomData.targetTerm || game.terms[0]?.code,
-        title: roomData.title,
-        storyScenario: roomData.storyScenario,
-        questionText: roomData.questionText,
-        roleHint: roomData.roleHint,
+      }];
+      
+      customRoomTemplates[rNum] = roomQuestions.map(rq => ({
+        targetRegister: rq.targetTerm || game.terms[0]?.code,
+        title: rq.title,
+        storyScenario: rq.storyScenario,
+        questionText: rq.questionText,
+        roleHint: rq.roleHint,
         roomId: ['A','B','C','D'][rNum - 1]
-      };
+      }));
     });
 
     // Reuse default constellations but adapt their assigned registers
@@ -85,7 +87,7 @@ export const PlayCustomGames: React.FC<PlayCustomGamesProps> = ({ onBack, onStar
         roomTemplates: customRoomTemplates,
         constellations: customConstellations
       });
-      onStartGame('teacher_dashboard');
+      onStartGame('setup');
     });
   };
 
