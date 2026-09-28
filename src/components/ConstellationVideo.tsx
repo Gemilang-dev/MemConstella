@@ -77,6 +77,18 @@ export const ConstellationVideo: React.FC<ConstellationVideoProps> = ({ onClose 
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-indigo-950/20 via-[#030712] to-black" />
         
         <svg className="absolute inset-0 w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
+          <defs>
+            <filter id="led-glow" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="1.5" result="blur1" />
+              <feGaussianBlur stdDeviation="3" result="blur2" />
+              <feMerge>
+                <feMergeNode in="blur2" />
+                <feMergeNode in="blur1" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+          </defs>
+
           {/* Constellation Lines */}
           {activeConstellation.lines.map((line, idx) => {
             const s1 = activeConstellation.stars.find((s) => s.id === line.from);
@@ -89,9 +101,9 @@ export const ConstellationVideo: React.FC<ConstellationVideoProps> = ({ onClose 
                 y1={`${s1.y}%`}
                 x2={`${s2.x}%`}
                 y2={`${s2.y}%`}
-                stroke="rgba(148, 163, 184, 0.4)"
-                strokeWidth="0.4"
-                strokeDasharray="1, 1"
+                stroke="rgba(255, 255, 255, 0.15)"
+                strokeWidth="0.15"
+                strokeDasharray="0.5, 0.5"
               />
             );
           })}
@@ -102,7 +114,6 @@ export const ConstellationVideo: React.FC<ConstellationVideoProps> = ({ onClose 
             const isActive = isPlaying && activeStar?.id === star.id && star.assignedRegister;
             const regData = star.assignedRegister ? gameData.registers[star.assignedRegister] : null;
             const regColor = regData ? regData.hex : '#ffffff';
-            const regGlow = regData ? regData.glowHex : 'rgba(255,255,255,0.8)';
             const regName = regData ? regData.name : star.assignedRegister;
 
             return (
@@ -111,18 +122,19 @@ export const ConstellationVideo: React.FC<ConstellationVideoProps> = ({ onClose 
                   <circle
                     cx={`${star.x}%`}
                     cy={`${star.y}%`}
-                    r="5"
-                    fill={regGlow}
-                    className="animate-pulse origin-center"
+                    r="2"
+                    fill={regColor}
+                    filter="url(#led-glow)"
+                    className="animate-[pulse_0.4s_ease-in-out_infinite]"
                   />
                 )}
                 <circle
                   cx={`${star.x}%`}
                   cy={`${star.y}%`}
-                  r="2"
-                  fill={isActive ? regColor : 'rgba(255, 255, 255, 0.2)'}
-                  stroke={isActive ? '#ffffff' : 'rgba(255, 255, 255, 0.6)'}
-                  strokeWidth="0.4"
+                  r={isActive ? "1" : "0.5"}
+                  fill={isActive ? "#ffffff" : "rgba(255, 255, 255, 0.25)"}
+                  stroke={isActive ? regColor : "transparent"}
+                  strokeWidth="0.2"
                 />
                 {isActive && (
                   <text
@@ -131,10 +143,11 @@ export const ConstellationVideo: React.FC<ConstellationVideoProps> = ({ onClose 
                     textAnchor="middle"
                     fill={regColor}
                     fontSize="3"
-                    fontWeight="bold"
-                    className="animate-bounce"
+                    fontWeight="800"
+                    className="animate-[pulse_1s_ease-in-out_infinite]"
+                    style={{ textShadow: `0 0 2px ${regColor}, 0 0 5px ${regColor}` }}
                   >
-                    {regName} Phase
+                    {regName}
                   </text>
                 )}
               </g>
