@@ -255,7 +255,7 @@ export const RoomStation: React.FC<RoomStationProps> = ({
                 </div>
               </div>
             </div>
-            <ConstellationVideo constellation={constellation} />
+            <ConstellationVideo constellation={constellation || gameData.constellations[0]} />
           </div>
         ) : !selectedStudentName ? (
           /* STEP 1: HOME SCREEN - SELECT OR ENTER STUDENT NAME */

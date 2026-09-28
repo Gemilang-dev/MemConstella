@@ -12,6 +12,8 @@ export const ConstellationVideo: React.FC<ConstellationVideoProps> = ({ constell
   const [currentTime, setCurrentTime] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
 
+  if (!constellation || !constellation.stars) return null;
+
   useEffect(() => {
     let interval: number;
     if (isPlaying) {
