@@ -242,22 +242,11 @@ export const RoomStation: React.FC<RoomStationProps> = ({
 
       {/* Main Content Area */}
       <div className="flex-1 p-4 md:p-6 max-w-7xl w-full mx-auto flex flex-col justify-start">
-        {isVideoVisible ? (
-          <div className="flex-1 flex flex-col">
-            <div className="flex items-center justify-between p-4 bg-indigo-950/40 border border-indigo-500/30 rounded-2xl mb-4 shadow-xl">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-indigo-600/30 border border-indigo-500/40 flex items-center justify-center text-indigo-300">
-                  <Compass className="w-5 h-5 animate-pulse" />
-                </div>
-                <div>
-                  <h2 className="text-lg font-bold text-white tracking-tight">Observation Mode</h2>
-                  <p className="text-xs text-indigo-300">Watch the sequence carefully to memorize the patterns.</p>
-                </div>
-              </div>
-            </div>
-            <ConstellationVideo constellation={constellation || gameData.constellations[0]} />
-          </div>
-        ) : !selectedStudentName ? (
+        {isVideoVisible && (
+          <ConstellationVideo onClose={() => setIsVideoVisible(false)} />
+        )}
+
+        {!selectedStudentName ? (
           /* STEP 1: HOME SCREEN - SELECT OR ENTER STUDENT NAME */
           <div className="max-w-3xl mx-auto w-full my-auto py-6">
             <div className="bg-slate-900/80 border border-slate-800 rounded-3xl p-6 md:p-8 shadow-2xl space-y-6">

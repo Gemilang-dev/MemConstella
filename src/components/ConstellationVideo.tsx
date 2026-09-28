@@ -1,123 +1,183 @@
 import React, { useState, useEffect } from 'react';
 import { Constellation } from '../types';
 import { useGameData } from '../contexts/GameDataContext';
+import { X, Play, Pause, RotateCcw, Compass } from 'lucide-react';
 
 interface ConstellationVideoProps {
-  constellation: Constellation;
-  onComplete?: () => void;
+  onClose: () => void;
 }
 
-export const ConstellationVideo: React.FC<ConstellationVideoProps> = ({ constellation, onComplete }) => {
+export const ConstellationVideo: React.FC<ConstellationVideoProps> = ({ onClose }) => {
   const { gameData } = useGameData();
+  const constellations = gameData.constellations;
+  const totalDuration = constellations.length * 10; // 10 seconds per constellation
+  
   const [currentTime, setCurrentTime] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(false);
-
-  if (!constellation || !constellation.stars) return null;
+  const [isPlaying, setIsPlaying] = useState(true);
 
   useEffect(() => {
     let interval: number;
     if (isPlaying) {
       interval = window.setInterval(() => {
         setCurrentTime(t => {
-          if (t >= 10) {
+          if (t >= totalDuration) {
             setIsPlaying(false);
-            if (onComplete) onComplete();
-            return 10;
+            return totalDuration;
           }
           return t + 0.1;
         });
       }, 100);
     }
     return () => clearInterval(interval);
-  }, [isPlaying, onComplete]);
+  }, [isPlaying, totalDuration]);
 
   const handlePlayPause = () => {
-    if (currentTime >= 10) setCurrentTime(0);
+    if (currentTime >= totalDuration) setCurrentTime(0);
     setIsPlaying(!isPlaying);
   };
 
-  const activeStarIndex = Math.floor(currentTime / 2);
-  const activeStar = constellation.stars[activeStarIndex];
+  const activeConstellationIndex = Math.min(
+    Math.floor(currentTime / 10),
+    constellations.length - 1
+  );
+  
+  const activeConstellation = constellations[activeConstellationIndex];
+  const localTime = currentTime % 10;
+  
+  // Each color blinks for 2 seconds (5 colors = 10s total)
+  const activeStarIndex = Math.floor(localTime / 2);
+  const activeStar = activeConstellation.stars[activeStarIndex];
 
   return (
-    <div className="relative flex-1 min-h-[380px] w-full rounded-xl bg-[#030712] border border-slate-800/80 overflow-hidden my-3">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-950/25 via-[#030712] to-black" />
-      
-      <div className="absolute top-4 left-4 z-10 flex gap-2">
-        <button
-          onClick={handlePlayPause}
-          className="px-3 py-1.5 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-bold"
-        >
-          {isPlaying ? 'Pause' : currentTime >= 10 ? 'Replay' : 'Play Observation Video'}
-        </button>
-        <div className="px-3 py-1.5 bg-slate-800 text-slate-300 rounded-lg text-xs font-mono">
-          {currentTime.toFixed(1)}s / 10.0s
+    <div className="fixed inset-0 z-[100] bg-black text-white flex flex-col overflow-hidden">
+      {/* Top Header */}
+      <div className="absolute top-0 inset-x-0 z-10 flex items-center justify-between p-4 md:p-6 bg-gradient-to-b from-black/80 to-transparent">
+        <div className="flex items-center gap-3">
+          <div className="w-12 h-12 rounded-xl bg-indigo-600/30 border border-indigo-500/40 flex items-center justify-center text-indigo-300">
+            <Compass className="w-7 h-7 animate-[spin_10s_linear_infinite]" />
+          </div>
+          <div>
+            <h2 className="text-xl md:text-2xl font-bold text-white tracking-tight">Global Observation Mode</h2>
+            <p className="text-xs md:text-sm text-indigo-300">
+              Constellation {activeConstellationIndex + 1} of {constellations.length}: {activeConstellation.name} ({activeConstellation.latinName})
+            </p>
+          </div>
         </div>
+        <button
+          onClick={onClose}
+          className="p-3 bg-rose-600/20 text-rose-300 hover:bg-rose-600 hover:text-white rounded-full transition-all border border-rose-500/30"
+          title="Close Video"
+        >
+          <X className="w-6 h-6" />
+        </button>
       </div>
 
-      <svg className="absolute inset-0 w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
-        {constellation.lines.map((line, idx) => {
-          const s1 = constellation.stars.find((s) => s.id === line.from);
-          const s2 = constellation.stars.find((s) => s.id === line.to);
-          if (!s1 || !s2) return null;
-          return (
-            <line
-              key={`line-${idx}`}
-              x1={`${s1.x}%`}
-              y1={`${s1.y}%`}
-              x2={`${s2.x}%`}
-              y2={`${s2.y}%`}
-              stroke="rgba(148, 163, 184, 0.4)"
-              strokeWidth="0.6"
-              strokeDasharray="1.5, 1.5"
-            />
-          );
-        })}
+      {/* Main Video Area */}
+      <div className="relative flex-1 w-full h-full bg-[#030712]">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-indigo-950/20 via-[#030712] to-black" />
+        
+        <svg className="absolute inset-0 w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
+          {/* Constellation Lines */}
+          {activeConstellation.lines.map((line, idx) => {
+            const s1 = activeConstellation.stars.find((s) => s.id === line.from);
+            const s2 = activeConstellation.stars.find((s) => s.id === line.to);
+            if (!s1 || !s2) return null;
+            return (
+              <line
+                key={`line-${idx}`}
+                x1={`${s1.x}%`}
+                y1={`${s1.y}%`}
+                x2={`${s2.x}%`}
+                y2={`${s2.y}%`}
+                stroke="rgba(148, 163, 184, 0.4)"
+                strokeWidth="0.4"
+                strokeDasharray="1, 1"
+              />
+            );
+          })}
 
-        {constellation.stars.map((star) => {
-          // If this star is the active one in the sequence and has an assigned register, light it up
-          const isActive = isPlaying && activeStar?.id === star.id && star.assignedRegister;
-          const regData = star.assignedRegister ? gameData.registers[star.assignedRegister] : null;
-          const regColor = regData ? regData.hex : '#ffffff';
-          const regGlow = regData ? regData.glowHex : 'rgba(255,255,255,0.8)';
-          const regName = regData ? regData.name : star.assignedRegister;
+          {/* Stars */}
+          {activeConstellation.stars.map((star) => {
+            // Check if this star is the active one in the sequence (blinking for 2s)
+            const isActive = isPlaying && activeStar?.id === star.id && star.assignedRegister;
+            const regData = star.assignedRegister ? gameData.registers[star.assignedRegister] : null;
+            const regColor = regData ? regData.hex : '#ffffff';
+            const regGlow = regData ? regData.glowHex : 'rgba(255,255,255,0.8)';
+            const regName = regData ? regData.name : star.assignedRegister;
 
-          return (
-            <g key={star.id} className="transition-all duration-300">
-              {isActive && (
+            return (
+              <g key={star.id} className="transition-all duration-300">
+                {isActive && (
+                  <circle
+                    cx={`${star.x}%`}
+                    cy={`${star.y}%`}
+                    r="5"
+                    fill={regGlow}
+                    className="animate-pulse origin-center"
+                  />
+                )}
                 <circle
                   cx={`${star.x}%`}
                   cy={`${star.y}%`}
-                  r="6"
-                  fill={regGlow}
-                  className="animate-pulse origin-center"
+                  r="2"
+                  fill={isActive ? regColor : 'rgba(255, 255, 255, 0.2)'}
+                  stroke={isActive ? '#ffffff' : 'rgba(255, 255, 255, 0.6)'}
+                  strokeWidth="0.4"
                 />
-              )}
-              <circle
-                cx={`${star.x}%`}
-                cy={`${star.y}%`}
-                r="3"
-                fill={isActive ? regColor : 'rgba(255, 255, 255, 0.2)'}
-                stroke={isActive ? '#ffffff' : 'rgba(255, 255, 255, 0.6)'}
-                strokeWidth="0.8"
+                {isActive && (
+                  <text
+                    x={`${star.x}%`}
+                    y={`${star.y - 4}%`}
+                    textAnchor="middle"
+                    fill={regColor}
+                    fontSize="3"
+                    fontWeight="bold"
+                    className="animate-bounce"
+                  >
+                    {regName} Phase
+                  </text>
+                )}
+              </g>
+            );
+          })}
+        </svg>
+      </div>
+
+      {/* Bottom Controls */}
+      <div className="absolute bottom-0 inset-x-0 z-10 p-6 bg-gradient-to-t from-black via-black/80 to-transparent flex flex-col items-center gap-4">
+        <div className="w-full max-w-4xl flex items-center gap-4">
+          <button
+            onClick={handlePlayPause}
+            className="w-14 h-14 flex items-center justify-center bg-indigo-600 hover:bg-indigo-500 text-white rounded-full shadow-[0_0_20px_rgba(79,70,229,0.4)] transition-all shrink-0"
+          >
+            {currentTime >= totalDuration ? <RotateCcw className="w-6 h-6" /> : isPlaying ? <Pause className="w-6 h-6" /> : <Play className="w-6 h-6 ml-1" />}
+          </button>
+          
+          <div className="flex-1 flex flex-col gap-2">
+            <div className="flex justify-between text-xs font-mono text-indigo-300 font-semibold">
+              <span>{Math.floor(currentTime)}s</span>
+              <span>{totalDuration}s</span>
+            </div>
+            {/* Progress Bar Container */}
+            <div className="w-full h-3 bg-slate-800 rounded-full overflow-hidden relative cursor-pointer"
+                 onClick={(e) => {
+                   const rect = e.currentTarget.getBoundingClientRect();
+                   const pct = (e.clientX - rect.left) / rect.width;
+                   setCurrentTime(pct * totalDuration);
+                 }}>
+              {/* Markers for each constellation */}
+              {constellations.map((_, i) => (
+                <div key={i} className="absolute top-0 bottom-0 w-px bg-slate-600 z-10" style={{ left: `${(i * 10 / totalDuration) * 100}%` }} />
+              ))}
+              {/* Fill */}
+              <div 
+                className="absolute top-0 bottom-0 left-0 bg-gradient-to-r from-blue-500 via-indigo-500 to-cyan-400 transition-all duration-100 ease-linear"
+                style={{ width: `${(currentTime / totalDuration) * 100}%` }}
               />
-              {isActive && (
-                <text
-                  x={`${star.x}%`}
-                  y={`${star.y - 6}%`}
-                  textAnchor="middle"
-                  fill={regColor}
-                  fontSize="4"
-                  fontWeight="bold"
-                  className="animate-bounce"
-                >
-                  {regName} Phase
-                </text>
-              )}
-            </g>
-          );
-        })}
-      </svg>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
