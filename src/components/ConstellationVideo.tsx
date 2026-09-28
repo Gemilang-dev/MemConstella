@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Constellation } from '../types';
-import { CPU_REGISTERS } from '../data/registers';
+import { useGameData } from '../contexts/GameDataContext';
 
 interface ConstellationVideoProps {
   constellation: Constellation;
@@ -8,6 +8,7 @@ interface ConstellationVideoProps {
 }
 
 export const ConstellationVideo: React.FC<ConstellationVideoProps> = ({ constellation, onComplete }) => {
+  const { gameData } = useGameData();
   const [currentTime, setCurrentTime] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
 
@@ -74,8 +75,10 @@ export const ConstellationVideo: React.FC<ConstellationVideoProps> = ({ constell
         {constellation.stars.map((star) => {
           // If this star is the active one in the sequence and has an assigned register, light it up
           const isActive = isPlaying && activeStar?.id === star.id && star.assignedRegister;
-          const regColor = star.assignedRegister ? CPU_REGISTERS[star.assignedRegister].hex : '#ffffff';
-          const regGlow = star.assignedRegister ? CPU_REGISTERS[star.assignedRegister].glowHex : 'rgba(255,255,255,0.8)';
+          const regData = star.assignedRegister ? gameData.registers[star.assignedRegister] : null;
+          const regColor = regData ? regData.hex : '#ffffff';
+          const regGlow = regData ? regData.glowHex : 'rgba(255,255,255,0.8)';
+          const regName = regData ? regData.name : star.assignedRegister;
 
           return (
             <g key={star.id} className="transition-all duration-300">
@@ -106,7 +109,7 @@ export const ConstellationVideo: React.FC<ConstellationVideoProps> = ({ constell
                   fontWeight="bold"
                   className="animate-bounce"
                 >
-                  {star.assignedRegister} Phase
+                  {regName} Phase
                 </text>
               )}
             </g>
