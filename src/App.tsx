@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
 import { AppArea, RoomNumber } from './types';
 import { HeaderNavigation } from './components/HeaderNavigation';
 import { RoomStation } from './components/RoomStation';
@@ -10,26 +11,21 @@ import { listenToSync } from './utils/storage';
 import { sound } from './utils/audio';
 
 export default function App() {
-  const [currentArea, setCurrentArea] = useState<AppArea>('home');
+  const navigate = useNavigate();
+  const location = useLocation();
   const [isMuted, setIsMuted] = useState(false);
   const [isQuizActive, setIsQuizActive] = useState(false);
   const [, setSyncTick] = useState(0);
 
-  // Check URL query parameters for initial room: e.g. ?room=a, ?room=b, ?room=c, ?room=d, or ?screen=dashboard
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const params = new URLSearchParams(window.location.search);
-      const roomParam = params.get('room') || params.get('screen') || params.get('area');
-      if (roomParam) {
-        const lower = roomParam.toLowerCase();
-        if (lower === 'a' || lower === 'room_a' || lower === '1') setCurrentArea('room_a');
-        else if (lower === 'b' || lower === 'room_b' || lower === '2') setCurrentArea('room_b');
-        else if (lower === 'c' || lower === 'room_c' || lower === '3') setCurrentArea('room_c');
-        else if (lower === 'd' || lower === 'room_d' || lower === '4') setCurrentArea('room_d');
-        else if (lower === 'teacher' || lower === 'dashboard') setCurrentArea('teacher_dashboard');
-      }
-    }
-  }, []);
+  // Derive currentArea from location pathname
+  let currentArea: AppArea = 'home';
+  if (location.pathname.includes('/room/a')) currentArea = 'room_a';
+  else if (location.pathname.includes('/room/b')) currentArea = 'room_b';
+  else if (location.pathname.includes('/room/c')) currentArea = 'room_c';
+  else if (location.pathname.includes('/room/d')) currentArea = 'room_d';
+  else if (location.pathname.includes('/dashboard')) currentArea = 'teacher_dashboard';
+  else if (location.pathname.includes('/builder')) currentArea = 'custom_builder';
+  else if (location.pathname.includes('/play-custom')) currentArea = 'play_custom';
 
   // Listen to multi-tab sync
   useEffect(() => {
@@ -45,17 +41,26 @@ export default function App() {
     sound.isMuted = next;
   };
 
-  const handleGoToRoom = (num: RoomNumber) => {
-    if (isQuizActive) return; // Prevent switching when student is actively answering
-    if (num === 1) setCurrentArea('room_a');
-    else if (num === 2) setCurrentArea('room_b');
-    else if (num === 3) setCurrentArea('room_c');
-    else if (num === 4) setCurrentArea('room_d');
-  };
-
   const handleSelectArea = (area: AppArea) => {
     if (isQuizActive) return;
-    setCurrentArea(area);
+    
+    // Map AppArea to routes
+    if (area === 'home') navigate('/');
+    else if (area === 'room_a') navigate('/room/a');
+    else if (area === 'room_b') navigate('/room/b');
+    else if (area === 'room_c') navigate('/room/c');
+    else if (area === 'room_d') navigate('/room/d');
+    else if (area === 'teacher_dashboard') navigate('/dashboard');
+    else if (area === 'custom_builder') navigate('/builder');
+    else if (area === 'play_custom') navigate('/play-custom');
+  };
+
+  const handleGoToRoom = (num: RoomNumber) => {
+    if (isQuizActive) return;
+    if (num === 1) navigate('/room/a');
+    else if (num === 2) navigate('/room/b');
+    else if (num === 3) navigate('/room/c');
+    else if (num === 4) navigate('/room/d');
   };
 
   return (
@@ -73,58 +78,40 @@ export default function App() {
 
       {/* Main Viewport */}
       <main className="flex-1 flex flex-col relative w-full overflow-hidden">
-        {currentArea === 'home' && (
-          <Home onStart={handleSelectArea} />
-        )}
-        {currentArea === 'room_a' && (
-          <RoomStation
-            roomNumber={1}
-            onChangeRoom={handleGoToRoom}
-            onQuizActiveChange={setIsQuizActive}
-          />
-        )}
+        <Routes>
+          <Route path="/" element={<Home onStart={handleSelectArea} />} />
+          
+          <Route path="/room/a" element={
+            <RoomStation roomNumber={1} onChangeRoom={handleGoToRoom} onQuizActiveChange={setIsQuizActive} />
+          } />
+          
+          <Route path="/room/b" element={
+            <RoomStation roomNumber={2} onChangeRoom={handleGoToRoom} onQuizActiveChange={setIsQuizActive} />
+          } />
+          
+          <Route path="/room/c" element={
+            <RoomStation roomNumber={3} onChangeRoom={handleGoToRoom} onQuizActiveChange={setIsQuizActive} />
+          } />
+          
+          <Route path="/room/d" element={
+            <RoomStation roomNumber={4} onChangeRoom={handleGoToRoom} onQuizActiveChange={setIsQuizActive} />
+          } />
 
-        {currentArea === 'room_b' && (
-          <RoomStation
-            roomNumber={2}
-            onChangeRoom={handleGoToRoom}
-            onQuizActiveChange={setIsQuizActive}
-          />
-        )}
+          <Route path="/builder" element={
+            <CustomGameBuilder onCancel={() => handleSelectArea('home')} onFinish={() => handleSelectArea('play_custom')} />
+          } />
 
-        {currentArea === 'room_c' && (
-          <RoomStation
-            roomNumber={3}
-            onChangeRoom={handleGoToRoom}
-            onQuizActiveChange={setIsQuizActive}
-          />
-        )}
+          <Route path="/play-custom" element={
+            <PlayCustomGames onBack={() => handleSelectArea('home')} onStartGame={handleSelectArea} />
+          } />
 
-        {currentArea === 'room_d' && (
-          <RoomStation
-            roomNumber={4}
-            onChangeRoom={handleGoToRoom}
-            onQuizActiveChange={setIsQuizActive}
-          />
-        )}
+          <Route path="/dashboard" element={
+            <TeacherDashboard onGoToRoom={handleGoToRoom} />
+          } />
 
-        {currentArea === 'custom_builder' && (
-          <CustomGameBuilder 
-            onCancel={() => handleSelectArea('home')}
-            onFinish={() => handleSelectArea('play_custom')}
-          />
-        )}
-        
-        {currentArea === 'play_custom' && (
-          <PlayCustomGames
-            onBack={() => handleSelectArea('home')}
-            onStartGame={handleSelectArea}
-          />
-        )}
-
-        {currentArea === 'teacher_dashboard' && (
-          <TeacherDashboard onGoToRoom={handleGoToRoom} />
-        )}
+          {/* Fallback route */}
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
       </main>
     </div>
   );
