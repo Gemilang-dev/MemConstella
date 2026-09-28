@@ -186,9 +186,12 @@ export const RoomStation: React.FC<RoomStationProps> = ({
                     <button
                       key={rNum}
                       id={`btn-switch-to-room-${rLetter.toLowerCase()}`}
-                      onClick={() => onChangeRoom(rNum)}
+                      onClick={() => {
+                        onChangeRoom(rNum);
+                        setIsVideoVisible(false);
+                      }}
                       className={`px-3 py-1 text-xs font-semibold rounded-lg transition-all ${
-                        roomNumber === rNum
+                        roomNumber === rNum && !isVideoVisible
                           ? 'bg-blue-600 text-white shadow-sm'
                           : 'text-slate-400 hover:text-white hover:bg-slate-700/60'
                       }`}
@@ -197,6 +200,40 @@ export const RoomStation: React.FC<RoomStationProps> = ({
                     </button>
                   );
                 })}
+                
+                <div className="w-px h-4 bg-slate-700 mx-1" />
+                
+                {passwordPromptActive ? (
+                  <div className="flex items-center gap-1">
+                    <input
+                      type="password"
+                      className="px-2 py-1 text-xs bg-slate-900 border border-slate-700 rounded outline-none focus:border-indigo-500 w-20 text-white"
+                      placeholder="Password"
+                      value={passwordInput}
+                      onChange={(e) => setPasswordInput(e.target.value)}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter') handleVideoUnlock();
+                      }}
+                    />
+                    <button onClick={handleVideoUnlock} className="px-2 py-1 text-xs bg-indigo-600 text-white rounded hover:bg-indigo-500">Unlock</button>
+                    <button onClick={() => { setPasswordPromptActive(false); setPasswordInput(''); }} className="px-2 py-1 text-xs bg-slate-700 text-slate-300 rounded hover:bg-slate-600">X</button>
+                  </div>
+                ) : (
+                  <button
+                    onClick={() => {
+                      if (isVideoVisible) setIsVideoVisible(false);
+                      else setPasswordPromptActive(true);
+                    }}
+                    className={`px-3 py-1 text-xs font-semibold rounded-lg transition-all flex items-center gap-1.5 ${
+                      isVideoVisible
+                        ? 'bg-indigo-600 text-white shadow-sm'
+                        : 'text-indigo-300 hover:text-white hover:bg-slate-700/60'
+                    }`}
+                  >
+                    {!isVideoVisible && <Lock className="w-3 h-3" />}
+                    Observation Video
+                  </button>
+                )}
               </div>
             </div>
           )}
@@ -205,7 +242,22 @@ export const RoomStation: React.FC<RoomStationProps> = ({
 
       {/* Main Content Area */}
       <div className="flex-1 p-4 md:p-6 max-w-7xl w-full mx-auto flex flex-col justify-start">
-        {!selectedStudentName ? (
+        {isVideoVisible ? (
+          <div className="flex-1 flex flex-col">
+            <div className="flex items-center justify-between p-4 bg-indigo-950/40 border border-indigo-500/30 rounded-2xl mb-4 shadow-xl">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-indigo-600/30 border border-indigo-500/40 flex items-center justify-center text-indigo-300">
+                  <Compass className="w-5 h-5 animate-pulse" />
+                </div>
+                <div>
+                  <h2 className="text-lg font-bold text-white tracking-tight">Observation Mode</h2>
+                  <p className="text-xs text-indigo-300">Watch the sequence carefully to memorize the patterns.</p>
+                </div>
+              </div>
+            </div>
+            <ConstellationVideo constellation={constellation} />
+          </div>
+        ) : !selectedStudentName ? (
           /* STEP 1: HOME SCREEN - SELECT OR ENTER STUDENT NAME */
           <div className="max-w-3xl mx-auto w-full my-auto py-6">
             <div className="bg-slate-900/80 border border-slate-800 rounded-3xl p-6 md:p-8 shadow-2xl space-y-6">
@@ -627,56 +679,10 @@ export const RoomStation: React.FC<RoomStationProps> = ({
                         <span className="text-slate-400 hidden sm:inline">
                           Click on any star node to select
                         </span>
-                        {isVideoVisible ? (
-                          <button
-                            onClick={() => setIsVideoVisible(false)}
-                            className="px-2 py-1 bg-slate-800 text-slate-300 rounded hover:bg-slate-700 transition"
-                          >
-                            Hide Video
-                          </button>
-                        ) : passwordPromptActive ? (
-                          <div className="flex items-center gap-1">
-                            <input
-                              type="password"
-                              className="px-2 py-1 bg-slate-900 border border-slate-700 rounded w-24 outline-none focus:border-blue-500"
-                              placeholder="Password"
-                              value={passwordInput}
-                              onChange={(e) => setPasswordInput(e.target.value)}
-                              onKeyDown={(e) => {
-                                if (e.key === 'Enter') handleVideoUnlock();
-                              }}
-                            />
-                            <button
-                              onClick={handleVideoUnlock}
-                              className="px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-500"
-                            >
-                              Unlock
-                            </button>
-                            <button
-                              onClick={() => {
-                                setPasswordPromptActive(false);
-                                setPasswordInput('');
-                              }}
-                              className="px-2 py-1 bg-slate-800 text-slate-400 rounded hover:bg-slate-700"
-                            >
-                              Cancel
-                            </button>
-                          </div>
-                        ) : (
-                          <button
-                            onClick={() => setPasswordPromptActive(true)}
-                            className="px-2 py-1 bg-indigo-600/30 text-indigo-300 border border-indigo-500/40 rounded hover:bg-indigo-600/50 transition flex items-center gap-1"
-                          >
-                            <Lock className="w-3 h-3" /> Show Video
-                          </button>
-                        )}
                       </div>
                     </div>
 
-                    {isVideoVisible ? (
-                      <ConstellationVideo constellation={constellation} />
-                    ) : (
-                      <div className="relative flex-1 min-h-[380px] w-full rounded-xl bg-[#030712] border border-slate-800/80 overflow-hidden my-3">
+                    <div className="relative flex-1 min-h-[380px] w-full rounded-xl bg-[#030712] border border-slate-800/80 overflow-hidden my-3">
                         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-950/25 via-[#030712] to-black" />
 
                       <svg className="absolute inset-0 w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
@@ -764,7 +770,6 @@ export const RoomStation: React.FC<RoomStationProps> = ({
                         })}
                       </svg>
                     </div>
-                    )}
 
                     <div className="flex items-center justify-between text-[11px] text-slate-400 px-1">
                       <span>💡 Assigned to {selectedStudentName} in Room {roomId}</span>
