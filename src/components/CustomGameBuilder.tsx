@@ -1,5 +1,6 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { ArrowRight, ArrowLeft, Save, Upload, Plus, Trash2, Building } from 'lucide-react';
+import { useLocation } from 'react-router-dom';
 import { CustomGamePackage, saveCustomGame } from '../utils/storage';
 import { ROOM_MAPPING } from '../types';
 
@@ -9,10 +10,18 @@ interface CustomGameBuilderProps {
 }
 
 export const CustomGameBuilder: React.FC<CustomGameBuilderProps> = ({ onCancel, onFinish }) => {
+  const location = useLocation();
+  const pkg = location.state?.packageToEdit as CustomGamePackage | undefined;
+
   const [step, setStep] = useState(1);
-  const [title, setTitle] = useState('');
-  const [terms, setTerms] = useState<{ id: string; name: string }[]>([{ id: '1', name: '' }]);
-  const [rooms, setRooms] = useState<CustomGamePackage['rooms']>({});
+  const [title, setTitle] = useState(pkg ? pkg.title : '');
+  
+  // Enforce EXACTLY 5 terms. Initialize from pkg or default to 5 empty.
+  const initialTerms = pkg ? pkg.terms.map((t, i) => ({ id: i.toString(), name: t.name })) : 
+    Array.from({ length: 5 }).map((_, i) => ({ id: i.toString(), name: '' }));
+  
+  const [terms, setTerms] = useState<{ id: string; name: string }[]>(initialTerms);
+  const [rooms, setRooms] = useState<CustomGamePackage['rooms']>(pkg ? pkg.rooms : {});
   const [selectedRoom, setSelectedRoom] = useState<number>(1);
   const [selectedQuestionIdx, setSelectedQuestionIdx] = useState<number>(0);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -20,14 +29,8 @@ export const CustomGameBuilder: React.FC<CustomGameBuilderProps> = ({ onCancel, 
   const handleNext = () => setStep(s => s + 1);
   const handlePrev = () => setStep(s => s - 1);
 
-  const handleAddTerm = () => setTerms([...terms, { id: Date.now().toString(), name: '' }]);
   const handleUpdateTerm = (id: string, val: string) => {
     setTerms(terms.map(t => t.id === id ? { ...t, name: val } : t));
-  };
-  const handleRemoveTerm = (id: string) => {
-    if (terms.length > 1) {
-      setTerms(terms.filter(t => t.id !== id));
-    }
   };
 
   const currentRoomQuestions = rooms[selectedRoom] || [{
@@ -104,8 +107,8 @@ export const CustomGameBuilder: React.FC<CustomGameBuilderProps> = ({ onCancel, 
 
   const handleSave = () => {
     const validTerms = terms.filter(t => t.name.trim() !== '');
-    if (validTerms.length === 0) {
-      alert("Please provide at least one term.");
+    if (validTerms.length !== 5) {
+      alert("Please provide exactly 5 items. The game requires 5 items to match the 5 stars in the constellations.");
       return;
     }
     if (!title.trim()) {
@@ -114,7 +117,7 @@ export const CustomGameBuilder: React.FC<CustomGameBuilderProps> = ({ onCancel, 
     }
 
     const newGame: CustomGamePackage = {
-      id: `game_${Date.now()}`,
+      id: pkg ? pkg.id : `game_${Date.now()}`,
       title,
       terms: validTerms.map(t => ({ code: t.name.toUpperCase().replace(/\s/g, '_'), name: t.name })),
       rooms
@@ -170,7 +173,7 @@ export const CustomGameBuilder: React.FC<CustomGameBuilderProps> = ({ onCancel, 
         {step === 2 && (
           <div className="space-y-4 animate-in fade-in slide-in-from-bottom-4">
             <h3 className="text-xl font-semibold">2. Items to Memorize</h3>
-            <p className="text-sm text-slate-400">List the concepts, names, or items students need to find in the stars (e.g., Mitochondria, Nucleus).</p>
+            <p className="text-sm text-slate-400">List exactly 5 concepts, names, or items students need to find. These will map to the 5 stars in the constellations (e.g., Mitochondria, Nucleus).</p>
             
             <div className="space-y-3 max-h-64 overflow-y-auto pr-2">
               {terms.map((t, idx) => (
@@ -183,16 +186,9 @@ export const CustomGameBuilder: React.FC<CustomGameBuilderProps> = ({ onCancel, 
                     value={t.name}
                     onChange={(e) => handleUpdateTerm(t.id, e.target.value)}
                   />
-                  <button onClick={() => handleRemoveTerm(t.id)} className="p-2 bg-slate-800 text-rose-400 rounded-xl hover:bg-rose-900/40 transition">
-                    <Trash2 className="w-4 h-4" />
-                  </button>
                 </div>
               ))}
             </div>
-            
-            <button onClick={handleAddTerm} className="flex items-center gap-2 text-sm text-blue-400 hover:text-blue-300 font-semibold px-2 py-1">
-              <Plus className="w-4 h-4" /> Add Item
-            </button>
           </div>
         )}
 

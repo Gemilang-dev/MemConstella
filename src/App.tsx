@@ -106,7 +106,11 @@ export default function App() {
           } />
 
           <Route path="/play-custom" element={
-            <PlayCustomGames onBack={() => handleSelectArea('home')} onStartGame={handleSelectArea} />
+            <PlayCustomGames 
+              onBack={() => handleSelectArea('home')} 
+              onStartGame={handleSelectArea} 
+              onEditGame={(game) => navigate('/builder', { state: { packageToEdit: game } })}
+            />
           } />
 
           <Route path="/dashboard" element={
