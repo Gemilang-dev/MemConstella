@@ -1,8 +1,10 @@
-# MemConstella
+# MemConstella 🌌
 
 A web-based educational game where students map technical or conceptual topics to interactive star constellations. Originally designed to teach CPU Registers (PC, IR, MAR, MDR, ACC), this application is now a fully customizable platform! Educators can use the built-in CPU Register materials or use the **Game Builder** to create and save their own learning packages for any subject.
 
-## Key Features
+![Halaman Utama MemConstella]([Tolong screenshot halaman utama/home screen aplikasi yang menampilkan 3 pilihan mode: Register CPU, Create Custom, Play Games])
+
+## ✨ Key Features
 
 *   **3 Play Modes on Startup:**
     *   **Register CPU:** Launch the default IT architecture materials.
@@ -14,41 +16,88 @@ A web-based educational game where students map technical or conceptual topics t
     *   Manually configure rooms/questions using a form, or upload a JSON file for specific rooms.
     *   Save packages locally to the browser for quick access in future sessions.
 *   **Video Observation Mode:** 
-    *   An interactive SVG constellation animation plays out the sequence of steps visually.
+    *   An interactive SVG constellation animation plays out the sequence of steps visually and loops seamlessly!
     *   Teachers can set a custom **Video Password** in the Teacher Dashboard to securely gate access.
-    *   Students must enter the correct password to unlock and show the video.
+    *   Students must enter the correct password to unlock and view the video animation.
 *   **Teacher Dashboard:** Real-time monitoring of all student connections, attempts, and room completion status.
 
-## Getting Started
+---
 
-**Prerequisites:** Node.js (v16+)
+## 🚀 Getting Started
 
-1.  **Install dependencies:**
+**Prerequisites:** Node.js (v16+).
+
+1.  **Clone / Download Repository**
+2.  **Install dependencies:**
     ```bash
     npm install
     ```
-2.  **Run the app locally:**
+3.  **Run the app locally:**
     ```bash
     npm run dev
     ```
-3.  Open `http://localhost:3000` in your browser.
+4.  Open `http://localhost:3000` in your browser.
 
-## How to Create Custom Materials
+---
 
-1.  On the Home screen, click **Create Custom**.
-2.  **Step 1:** Name your material.
-3.  **Step 2:** Add all the core items/concepts your students need to memorize.
-4.  **Step 3:** Configure the 4 rooms. For each room, provide a story scenario, question text, hint, and select the correct target answer from your list of concepts. (You can also upload a pre-filled JSON file for that room here).
-5.  Click **Save Package**.
-6.  The new package will appear in your **Play Games** library. Click Play to start the session with your custom data!
+## 🎮 Cara Menggunakan Aplikasi (User Guide)
 
-## Tech Stack
+Aplikasi ini memiliki 3 mode utama. Berikut adalah panduan cara menggunakannya:
+
+### 1. Bermain Mode Default (Register CPU)
+Mode ini sudah memiliki soal bawaan mengenai arsitektur CPU dan Register.
+* Di halaman utama, pilih **Register CPU**.
+* Masukkan nama Anda dan masuk ke dalam permainan.
+* Jawab setiap pertanyaan di setiap ruangan (Room) dengan memilih jawaban yang tepat berdasarkan cerita/petunjuk.
+
+![Gameplay Register CPU]([Tolong screenshot tampilan saat sedang bermain di dalam salah satu Room, memperlihatkan pertanyaan dan pilihan jawaban])
+
+### 2. Membuat Materi Sendiri (Create Custom)
+Anda bisa membuat soal kustom untuk pelajaran apa saja (Biologi, Sejarah, Bahasa, dll).
+1. Pada halaman utama, klik **Create Custom**.
+2. **Step 1:** Masukkan nama materi/paket pembelajaran Anda.
+3. **Step 2:** Tambahkan semua daftar item/konsep utama yang perlu dihafal oleh siswa (contoh: Kloroplas, Mitokondria, dll).
+4. **Step 3:** Konfigurasi 4 ruangan (Rooms). Untuk setiap ruangan:
+   * Masukkan skenario cerita.
+   * Masukkan teks pertanyaan dan petunjuk (hint).
+   * Pilih target jawaban yang benar dari daftar konsep yang sudah Anda buat di Step 2.
+   * *(Opsional)* Anda juga bisa mengunggah file JSON untuk mengisi data ruangan secara otomatis.
+5. Klik **Save Package**.
+
+![Form Create Custom]([Tolong screenshot tampilan halaman Game Builder / saat sedang mengisi form pembuatan soal (Step 2 atau Step 3)])
+
+### 3. Memainkan Materi Buatan Sendiri (Play Games)
+Setelah Anda menyimpan materi di tahap sebelumnya, materi tersebut akan tersimpan di Library browser Anda.
+* Pada halaman utama, klik **Play Games**.
+* Pilih paket game yang sudah Anda buat dari daftar Library.
+* Klik **Play** untuk mulai bermain menggunakan soal-soal Anda sendiri.
+
+![Library Play Games]([Tolong screenshot halaman Library yang menampilkan daftar paket game custom yang sudah dibuat])
+
+---
+
+## 👨‍🏫 Teacher Dashboard & Video Mode
+
+Aplikasi ini dilengkapi dengan fitur pemantauan untuk guru dan animasi rasi bintang untuk siswa.
+
+**Bagi Guru:**
+* Guru dapat mengakses **Teacher Dashboard** untuk memantau progress siswa yang sedang bermain secara real-time.
+* Guru dapat mengatur **Video Password** yang nantinya harus dimasukkan oleh siswa jika mereka ingin melihat Video Constellation.
+
+![Teacher Dashboard]([Tolong screenshot tampilan Teacher Dashboard yang memperlihatkan list siswa dan pengaturan password video])
+
+**Bagi Siswa:**
+* Siswa dapat mengakses **Global Observation Mode** (Video Mode).
+* Siswa akan diminta memasukkan password yang diberikan oleh guru.
+* Setelah berhasil, siswa akan disuguhkan animasi pergerakan rasi bintang yang dimainkan secara otomatis (loop).
+
+![Video Observation Mode]([Tolong screenshot tampilan saat Video Observation Mode (animasi rasi bintang) sedang berputar])
+
+---
+
+## 🛠️ Tech Stack
 
 *   React 18
 *   Vite
 *   Tailwind CSS
 *   Lucide React (Icons)
-
-
-
-
