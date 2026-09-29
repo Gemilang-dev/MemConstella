@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Constellation } from '../types';
 import { useGameData } from '../contexts/GameDataContext';
-import { X, Play, Pause, RotateCcw, Compass } from 'lucide-react';
+import { X, Play, Pause, RotateCcw, Compass, Download, Square } from 'lucide-react';
 
 interface ConstellationVideoProps {
   onClose: () => void;
@@ -31,6 +31,63 @@ export const ConstellationVideo: React.FC<ConstellationVideoProps> = ({ onClose 
   }, [isPlaying, totalDuration]);
 
 
+  const [isRecording, setIsRecording] = useState(false);
+  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
+  const chunksRef = useRef<BlobPart[]>([]);
+
+  const handleRecord = async () => {
+    if (isRecording) {
+      mediaRecorderRef.current?.stop();
+      return;
+    }
+
+    try {
+      const stream = await navigator.mediaDevices.getDisplayMedia({
+        video: { displaySurface: 'browser' }
+      });
+      
+      let mimeType = 'video/webm';
+      if (MediaRecorder.isTypeSupported('video/mp4')) {
+        mimeType = 'video/mp4';
+      }
+      
+      const mediaRecorder = new MediaRecorder(stream, { mimeType });
+      mediaRecorderRef.current = mediaRecorder;
+      chunksRef.current = [];
+
+      mediaRecorder.ondataavailable = (e) => {
+        if (e.data.size > 0) {
+          chunksRef.current.push(e.data);
+        }
+      };
+
+      mediaRecorder.onstop = () => {
+        const blob = new Blob(chunksRef.current, { type: mimeType });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        
+        const ext = mimeType.includes('mp4') ? 'mp4' : 'webm';
+        a.download = `${gameData.name} video.${ext}`;
+        a.click();
+        URL.revokeObjectURL(url);
+        stream.getTracks().forEach(track => track.stop());
+        setIsRecording(false);
+      };
+
+      mediaRecorder.start();
+      setIsRecording(true);
+      
+      stream.getVideoTracks()[0].onended = () => {
+        if (mediaRecorder.state === 'recording') {
+          mediaRecorder.stop();
+        }
+      };
+    } catch (err) {
+      console.error('Error starting recording:', err);
+    }
+  };
+
   const activeConstellationIndex = Math.min(
     Math.floor(currentTime / 10),
     constellations.length - 1
@@ -58,13 +115,27 @@ export const ConstellationVideo: React.FC<ConstellationVideoProps> = ({ onClose 
             </p>
           </div>
         </div>
-        <button
-          onClick={onClose}
-          className="p-3 bg-rose-600/20 text-rose-300 hover:bg-rose-600 hover:text-white rounded-full transition-all border border-rose-500/30"
-          title="Close Video"
-        >
-          <X className="w-6 h-6" />
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={handleRecord}
+            className={`flex items-center gap-2 px-4 py-2 rounded-full font-semibold transition-all border ${
+              isRecording 
+                ? 'bg-red-600/20 text-red-400 border-red-500/30 hover:bg-red-600 hover:text-white animate-pulse' 
+                : 'bg-indigo-600/20 text-indigo-300 border-indigo-500/30 hover:bg-indigo-600 hover:text-white'
+            }`}
+            title={isRecording ? "Stop Recording" : "Record Video"}
+          >
+            {isRecording ? <Square className="w-5 h-5" /> : <Download className="w-5 h-5" />}
+            <span className="hidden md:inline">{isRecording ? "Stop" : "Download Video"}</span>
+          </button>
+          <button
+            onClick={onClose}
+            className="p-3 bg-rose-600/20 text-rose-300 hover:bg-rose-600 hover:text-white rounded-full transition-all border border-rose-500/30"
+            title="Close Video"
+          >
+            <X className="w-6 h-6" />
+          </button>
+        </div>
       </div>
 
       {/* Main Video Area */}
