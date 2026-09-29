@@ -34,10 +34,14 @@ export const ConstellationVideo: React.FC<ConstellationVideoProps> = ({ onClose 
   const [isRecording, setIsRecording] = useState(false);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const chunksRef = useRef<BlobPart[]>([]);
+  const recordingTimeoutRef = useRef<number | null>(null);
 
   const handleRecord = async () => {
     if (isRecording) {
       mediaRecorderRef.current?.stop();
+      if (recordingTimeoutRef.current) {
+        window.clearTimeout(recordingTimeoutRef.current);
+      }
       return;
     }
 
@@ -73,10 +77,20 @@ export const ConstellationVideo: React.FC<ConstellationVideoProps> = ({ onClose 
         URL.revokeObjectURL(url);
         stream.getTracks().forEach(track => track.stop());
         setIsRecording(false);
+        if (recordingTimeoutRef.current) {
+          window.clearTimeout(recordingTimeoutRef.current);
+        }
       };
 
       mediaRecorder.start();
       setIsRecording(true);
+      
+      // Auto-stop after 1 minute (60000 ms)
+      recordingTimeoutRef.current = window.setTimeout(() => {
+        if (mediaRecorderRef.current?.state === 'recording') {
+          mediaRecorderRef.current.stop();
+        }
+      }, 60000);
       
       stream.getVideoTracks()[0].onended = () => {
         if (mediaRecorder.state === 'recording') {
