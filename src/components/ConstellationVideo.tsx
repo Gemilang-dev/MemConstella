@@ -21,8 +21,7 @@ export const ConstellationVideo: React.FC<ConstellationVideoProps> = ({ onClose 
       interval = window.setInterval(() => {
         setCurrentTime(t => {
           if (t >= totalDuration) {
-            setIsPlaying(false);
-            return totalDuration;
+            return 0;
           }
           return t + 0.1;
         });
@@ -31,10 +30,6 @@ export const ConstellationVideo: React.FC<ConstellationVideoProps> = ({ onClose 
     return () => clearInterval(interval);
   }, [isPlaying, totalDuration]);
 
-  const handlePlayPause = () => {
-    if (currentTime >= totalDuration) setCurrentTime(0);
-    setIsPlaying(!isPlaying);
-  };
 
   const activeConstellationIndex = Math.min(
     Math.floor(currentTime / 10),
@@ -156,41 +151,7 @@ export const ConstellationVideo: React.FC<ConstellationVideoProps> = ({ onClose 
         </svg>
       </div>
 
-      {/* Bottom Controls */}
-      <div className="absolute bottom-0 inset-x-0 z-10 p-6 bg-gradient-to-t from-black via-black/80 to-transparent flex flex-col items-center gap-4">
-        <div className="w-full max-w-4xl flex items-center gap-4">
-          <button
-            onClick={handlePlayPause}
-            className="w-14 h-14 flex items-center justify-center bg-indigo-600 hover:bg-indigo-500 text-white rounded-full shadow-[0_0_20px_rgba(79,70,229,0.4)] transition-all shrink-0"
-          >
-            {currentTime >= totalDuration ? <RotateCcw className="w-6 h-6" /> : isPlaying ? <Pause className="w-6 h-6" /> : <Play className="w-6 h-6 ml-1" />}
-          </button>
-          
-          <div className="flex-1 flex flex-col gap-2">
-            <div className="flex justify-between text-xs font-mono text-indigo-300 font-semibold">
-              <span>{Math.floor(currentTime)}s</span>
-              <span>{totalDuration}s</span>
-            </div>
-            {/* Progress Bar Container */}
-            <div className="w-full h-3 bg-slate-800 rounded-full overflow-hidden relative cursor-pointer"
-                 onClick={(e) => {
-                   const rect = e.currentTarget.getBoundingClientRect();
-                   const pct = (e.clientX - rect.left) / rect.width;
-                   setCurrentTime(pct * totalDuration);
-                 }}>
-              {/* Markers for each constellation */}
-              {constellations.map((_, i) => (
-                <div key={i} className="absolute top-0 bottom-0 w-px bg-slate-600 z-10" style={{ left: `${(i * 10 / totalDuration) * 100}%` }} />
-              ))}
-              {/* Fill */}
-              <div 
-                className="absolute top-0 bottom-0 left-0 bg-gradient-to-r from-blue-500 via-indigo-500 to-cyan-400 transition-all duration-100 ease-linear"
-                style={{ width: `${(currentTime / totalDuration) * 100}%` }}
-              />
-            </div>
-          </div>
-        </div>
-      </div>
+
     </div>
   );
 };
