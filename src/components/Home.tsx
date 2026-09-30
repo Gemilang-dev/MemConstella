@@ -26,24 +26,25 @@ export const Home: React.FC<HomeProps> = ({ onStart }) => {
            style={{ backgroundImage: 'radial-gradient(circle, #ffffff 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
       
       {/* Header Navigation */}
-      <header className="relative z-10 flex flex-col sm:flex-row items-center justify-between px-8 py-6 w-full max-w-7xl mx-auto gap-4">
-        <div className="flex items-center gap-3">
-          <Star className="w-8 h-8 text-[#C084FC] fill-[#C084FC] animate-pulse" />
-          <div>
-            <h1 className="text-3xl font-extrabold tracking-tight bg-gradient-to-r from-[#C084FC] to-[#3B82F6] bg-clip-text text-transparent">
-              MemConstella
-            </h1>
-            <p className="text-xs text-[#9CA3AF] tracking-widest uppercase mt-1">The Educational Constellation Game</p>
+      <header className="relative z-10 w-full bg-black border-b border-white/10 shadow-lg">
+        <div className="flex flex-col sm:flex-row items-center justify-between px-8 py-4 max-w-7xl mx-auto gap-4">
+          <div className="flex items-center gap-3">
+            <Star className="w-8 h-8 text-[#C084FC] fill-[#C084FC] animate-pulse" />
+            <div>
+              <h1 className="text-2xl md:text-3xl font-extrabold tracking-tight bg-gradient-to-r from-[#C084FC] to-[#3B82F6] bg-clip-text text-transparent">
+                MemConstella
+              </h1>
+              <p className="text-[10px] md:text-xs text-[#9CA3AF] tracking-widest uppercase mt-1">The Educational Constellation Game</p>
+            </div>
           </div>
+          
+          <nav className="hidden md:flex items-center gap-8 text-sm font-medium">
+            <button className="text-white border-b-2 border-[#C084FC] pb-1 hover:text-[#C084FC] transition-colors">Home</button>
+            <button className="text-[#9CA3AF] hover:text-white transition-colors">How to play</button>
+            <button className="text-[#9CA3AF] hover:text-white transition-colors">How to setup</button>
+            <button className="text-[#9CA3AF] hover:text-white transition-colors">About</button>
+          </nav>
         </div>
-        
-        <nav className="hidden md:flex items-center gap-8 text-sm font-medium">
-          <button className="text-white border-b-2 border-[#C084FC] pb-1 hover:text-[#C084FC] transition-colors">MemeConstella</button>
-          <button className="text-[#9CA3AF] hover:text-white transition-colors">Explore</button>
-          <button className="text-[#9CA3AF] hover:text-white transition-colors">Leaderboard</button>
-          <button className="text-[#9CA3AF] hover:text-white transition-colors">Profile</button>
-          <button className="text-[#9CA3AF] hover:text-white transition-colors">Settings</button>
-        </nav>
       </header>
 
       {/* Main Content Area */}
