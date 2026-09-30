@@ -1,8 +1,10 @@
+*Read this in other languages: [English](README.md), [Bahasa Indonesia](README-id.md).*
+
 # MemConstella 🌌
 
 A web-based educational game where students map technical or conceptual topics to interactive star constellations. Originally designed to teach CPU Registers (PC, IR, MAR, MDR, ACC), this application is now a fully customizable platform! Educators can use the built-in CPU Register materials or use the **Game Builder** to create and save their own learning packages for any subject.
 
-![Halaman Utama MemConstella]([Tolong screenshot halaman utama/home screen aplikasi yang menampilkan 3 pilihan mode: Register CPU, Create Custom, Play Games])
+![MemConstella Home Screen]([Please screenshot the home screen showing 3 mode options: Register CPU, Create Custom, Play Games])
 
 ## ✨ Key Features
 
@@ -17,6 +19,7 @@ A web-based educational game where students map technical or conceptual topics t
     *   Save packages locally to the browser for quick access in future sessions.
 *   **Video Observation Mode:** 
     *   An interactive SVG constellation animation plays out the sequence of steps visually and loops seamlessly!
+    *   Includes a **Download Video** feature that automatically records and saves the video in 1 minute.
     *   Teachers can set a custom **Video Password** in the Teacher Dashboard to securely gate access.
     *   Students must enter the correct password to unlock and view the video animation.
 *   **Teacher Dashboard:** Real-time monitoring of all student connections, attempts, and room completion status.
@@ -40,79 +43,79 @@ A web-based educational game where students map technical or conceptual topics t
 
 ---
 
-## 🎮 Cara Menggunakan Aplikasi (User Guide)
+## 🎮 How to Use the Application (User Guide)
 
-Aplikasi ini memiliki 3 mode utama. Berikut adalah panduan cara menggunakannya:
+This application has 3 main modes. Here is a guide on how to use them:
 
-### 1. Bermain Mode Default (Register CPU)
-Mode ini sudah memiliki soal bawaan mengenai arsitektur CPU dan Register.
-* Di halaman utama, pilih **Register CPU**.
-* Masukkan nama Anda dan masuk ke dalam permainan.
-* Jawab setiap pertanyaan di setiap ruangan (Room) dengan memilih jawaban yang tepat berdasarkan cerita/petunjuk.
+### 1. Playing Default Mode (Register CPU)
+This mode comes with built-in questions about CPU architecture and Registers.
+* On the main page, select **Register CPU**.
+* Enter your name and enter the game.
+* Answer each question in each Room by choosing the right answer based on the story/clue.
 
-![Gameplay Register CPU]([Tolong screenshot tampilan saat sedang bermain di dalam salah satu Room, memperlihatkan pertanyaan dan pilihan jawaban])
+![Register CPU Gameplay]([Please screenshot the view while playing in one of the Rooms, showing the question and answer choices])
 
-### 2. Membuat Materi Sendiri (Create Custom)
-Anda bisa membuat soal kustom untuk pelajaran apa saja (Biologi, Sejarah, Bahasa, dll).
-1. Pada halaman utama, klik **Create Custom**.
-2. **Step 1:** Masukkan nama materi/paket pembelajaran Anda.
-3. **Step 2:** Tambahkan semua daftar item/konsep utama yang perlu dihafal oleh siswa (contoh: Kloroplas, Mitokondria, dll).
-4. **Step 3:** Konfigurasi 4 ruangan (Rooms). Untuk setiap ruangan:
-   * Masukkan skenario cerita.
-   * Masukkan teks pertanyaan dan petunjuk (hint).
-   * Pilih target jawaban yang benar dari daftar konsep yang sudah Anda buat di Step 2.
-   * *(Opsional)* Anda juga bisa mengunggah file JSON untuk mengisi data ruangan secara otomatis.
-5. Klik **Save Package**.
+### 2. Creating Custom Materials (Create Custom)
+You can create custom questions for any subject (Biology, History, Languages, etc).
+1. On the main page, click **Create Custom**.
+2. **Step 1:** Enter the name of your material/learning package.
+3. **Step 2:** Add all the core items/concepts that students need to memorize (e.g. Chloroplast, Mitochondria, etc).
+4. **Step 3:** Configure the 4 Rooms. For each room:
+   * Enter a story scenario.
+   * Enter the question text and hint.
+   * Select the correct target answer from the list of concepts you made in Step 2.
+   * *(Optional)* You can also upload a JSON file to automatically fill in the room data.
+5. Click **Save Package**.
 
-![Form Create Custom]([Tolong screenshot tampilan halaman Game Builder / saat sedang mengisi form pembuatan soal (Step 2 atau Step 3)])
+![Create Custom Form]([Please screenshot the Game Builder page / while filling out the question creation form (Step 2 or Step 3)])
 
-### 3. Memainkan Materi Buatan Sendiri (Play Games)
-Setelah Anda menyimpan materi di tahap sebelumnya, materi tersebut akan tersimpan di Library browser Anda.
-* Pada halaman utama, klik **Play Games**.
-* Pilih paket game yang sudah Anda buat dari daftar Library.
-* Klik **Play** untuk mulai bermain menggunakan soal-soal Anda sendiri.
+### 3. Playing Custom Materials (Play Games)
+After you save the material in the previous step, it will be saved in your browser's Library.
+* On the main page, click **Play Games**.
+* Select the game package you have created from the Library list.
+* Click **Play** to start playing using your own questions.
 
-![Library Play Games]([Tolong screenshot halaman Library yang menampilkan daftar paket game custom yang sudah dibuat])
+![Play Games Library]([Please screenshot the Library page showing the list of created custom game packages])
 
 ---
 
 ## 👨‍🏫 Teacher Dashboard & Video Mode
 
-Aplikasi ini dilengkapi dengan fitur pemantauan untuk guru dan animasi rasi bintang untuk siswa.
+This application is equipped with monitoring features for teachers and constellation animations for students.
 
-**Bagi Guru:**
-* Guru dapat mengakses **Teacher Dashboard** untuk memantau progress siswa yang sedang bermain secara real-time.
-* Guru dapat mengatur **Video Password** yang nantinya harus dimasukkan oleh siswa jika mereka ingin melihat Video Constellation.
+**For Teachers:**
+* Teachers can access the **Teacher Dashboard** to monitor the progress of students who are currently playing in real-time.
+* Teachers can set a **Video Password** which students must later enter if they want to see the Video Constellation.
 
-![Teacher Dashboard]([Tolong screenshot tampilan Teacher Dashboard yang memperlihatkan list siswa dan pengaturan password video])
+![Teacher Dashboard]([Please screenshot the Teacher Dashboard view showing the list of students and video password settings])
 
-**Bagi Siswa:**
-* Siswa dapat mengakses **Global Observation Mode** (Video Mode).
-* Siswa akan diminta memasukkan password yang diberikan oleh guru.
-* Setelah berhasil, siswa akan disuguhkan animasi pergerakan rasi bintang yang dimainkan secara otomatis (loop).
+**For Students:**
+* Students can access the **Global Observation Mode** (Video Mode).
+* Students will be asked to enter the password provided by the teacher.
+* After successfully entering it, students will be presented with a constellation movement animation that plays automatically (loop).
 
-![Video Observation Mode]([Tolong screenshot tampilan saat Video Observation Mode (animasi rasi bintang) sedang berputar])
+![Video Observation Mode]([Please screenshot the view when the Video Observation Mode (constellation animation) is playing])
 
 ---
 
-## 👩‍🏫 Cara Bermain di Kelas Bersama Siswa
+## 👩‍🏫 How to Play in Class with Students
 
-Saat mengimplementasikan permainan ini di dalam kelas, ada **2 pilihan skenario** yang bisa Anda (Guru) gunakan untuk menayangkan animasi *Video Constellation* (Rasi Bintang) agar selaras dengan permainan siswa:
+When implementing this game in the classroom, there are **2 scenario options** that you (the Teacher) can use to display the *Video Constellation* animation so that it aligns with the students' game:
 
-### Opsi 1: Video di Layar Terpisah (Proyektor / Layar Utama Kelas)
-Opsi ini sangat ideal untuk permainan interaktif terpusat.
-1. **Persiapan Guru:** Guru membuka game di komputer yang tersambung ke proyektor di depan kelas. Guru masuk ke **Global Observation Mode** (Video Mode), memasukkan password, dan memutar animasinya secara *fullscreen* di proyektor. (Guru juga dapat mendownload videonya terlebih dahulu menggunakan fitur *Download Video*).
-2. **Aktivitas Siswa:** Siswa membuka aplikasi di perangkat mereka masing-masing (laptop/tablet/HP) dan langsung masuk ke permainan (tidak perlu masuk ke menu Video Mode).
-3. **Cara Bermain:** Siswa berdiskusi atau secara individu menjawab soal-soal di layar perangkat mereka **dengan berpatokan pada animasi rasi bintang yang terus berputar di proyektor depan kelas**. 
+### Option 1: Video on a Separate Screen (Projector / Main Class Screen)
+This option is highly ideal for centralized interactive play.
+1. **Teacher Preparation:** The teacher opens the game on the computer connected to the projector at the front of the class. The teacher enters the **Global Observation Mode** (Video Mode), enters the password, and plays the animation *fullscreen* on the projector. (The teacher can also download the video beforehand using the *Download Video* feature).
+2. **Student Activity:** Students open the application on their respective devices (laptop/tablet/smartphone) and go straight into the game (no need to enter the Video Mode menu).
+3. **How to Play:** Students discuss or individually answer the questions on their device screens **by using the constellation animation that continuously plays on the front projector as a guide**.
 
-### Opsi 2: Video di Layar yang Sama (Perangkat Individu Siswa)
-Opsi ini cocok jika siswa belajar secara mandiri, jarak jauh (online), atau tidak tersedia fasilitas proyektor di kelas.
-1. **Persiapan Guru:** Guru membagikan **Video Password** kepada seluruh siswa.
-2. **Aktivitas Siswa:** Siswa membuka aplikasi di perangkat mereka masing-masing.
-3. **Cara Bermain:** 
-   * Siswa membuka menu **Global Observation Mode**, memasukkan password, dan melihat animasinya langsung di layar mereka.
-   * Siswa dapat menekan tombol **Download Video** untuk menyimpan video tersebut. 
-   * Setelah video tersimpan, siswa memutar video tersebut dan menyandingkannya (*split-screen*) dengan browser utama yang membuka halaman soal permainan. Siswa kini dapat menganalisa video di satu sisi layar sambil menjawab pertanyaan di sisi layar lainnya.
+### Option 2: Video on the Same Screen (Student's Individual Device)
+This option is suitable if students are learning independently, remotely (online), or if projector facilities are unavailable in class.
+1. **Teacher Preparation:** The teacher shares the **Video Password** with all students.
+2. **Student Activity:** Students open the application on their respective devices.
+3. **How to Play:**
+   * Students open the **Global Observation Mode** menu, enter the password, and view the animation directly on their screen.
+   * Students can press the **Download Video** button to save the video.
+   * Once the video is saved, students play the video and place it side-by-side (*split-screen*) with the main browser that has the game questions page open. Students can now analyze the video on one side of the screen while answering questions on the other side.
 
 ---
 
