@@ -4,7 +4,7 @@
 
 A web-based educational game where students map technical or conceptual topics to interactive star constellations. Originally designed to teach CPU Registers (PC, IR, MAR, MDR, ACC), this application is now a fully customizable platform! Educators can use the built-in CPU Register materials or use the **Game Builder** to create and save their own learning packages for any subject.
 
-![MemConstella Home Screen]([Please screenshot the home screen showing 3 mode options: Register CPU, Create Custom, Play Games])
+![MemConstella Home Screen](./assets/home.jpg)
 
 ## ✨ Key Features
 
@@ -53,7 +53,7 @@ This mode comes with built-in questions about CPU architecture and Registers.
 * Enter your name and enter the game.
 * Answer each question in each Room by choosing the right answer based on the story/clue.
 
-![Register CPU Gameplay]([Please screenshot the view while playing in one of the Rooms, showing the question and answer choices])
+![Register CPU Gameplay](./assets/gameplay.jpg)
 
 ### 2. Creating Custom Materials (Create Custom)
 You can create custom questions for any subject (Biology, History, Languages, etc).
@@ -67,7 +67,7 @@ You can create custom questions for any subject (Biology, History, Languages, et
    * *(Optional)* You can also upload a JSON file to automatically fill in the room data.
 5. Click **Save Package**.
 
-![Create Custom Form]([Please screenshot the Game Builder page / while filling out the question creation form (Step 2 or Step 3)])
+![Create Custom Form](./assets/builder.jpg)
 
 ### 3. Playing Custom Materials (Play Games)
 After you save the material in the previous step, it will be saved in your browser's Library.
@@ -75,7 +75,7 @@ After you save the material in the previous step, it will be saved in your brows
 * Select the game package you have created from the Library list.
 * Click **Play** to start playing using your own questions.
 
-![Play Games Library]([Please screenshot the Library page showing the list of created custom game packages])
+![Play Games Library](./assets/library.jpg)
 
 ---
 
@@ -87,14 +87,14 @@ This application is equipped with monitoring features for teachers and constella
 * Teachers can access the **Teacher Dashboard** to monitor the progress of students who are currently playing in real-time.
 * Teachers can set a **Video Password** which students must later enter if they want to see the Video Constellation.
 
-![Teacher Dashboard]([Please screenshot the Teacher Dashboard view showing the list of students and video password settings])
+![Teacher Dashboard](./assets/dashboard.jpg)
 
 **For Students:**
 * Students can access the **Global Observation Mode** (Video Mode).
 * Students will be asked to enter the password provided by the teacher.
 * After successfully entering it, students will be presented with a constellation movement animation that plays automatically (loop).
 
-![Video Observation Mode]([Please screenshot the view when the Video Observation Mode (constellation animation) is playing])
+![Video Observation Mode](./assets/video.jpg)
 
 ---
 

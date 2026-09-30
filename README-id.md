@@ -4,7 +4,7 @@
 
 Game edukasi berbasis web di mana siswa memetakan topik teknis atau konseptual ke dalam rasi bintang interaktif. Awalnya didesain untuk mengajarkan Register CPU (PC, IR, MAR, MDR, ACC), aplikasi ini sekarang menjadi platform yang sepenuhnya dapat dikustomisasi! Pendidik dapat menggunakan materi Register CPU bawaan atau menggunakan **Game Builder** untuk membuat dan menyimpan paket pembelajaran mereka sendiri untuk mata pelajaran apa pun.
 
-![Halaman Utama MemConstella]([Tolong screenshot halaman utama/home screen aplikasi yang menampilkan 3 pilihan mode: Register CPU, Create Custom, Play Games])
+![Halaman Utama MemConstella](./assets/home.jpg)
 
 ## ✨ Fitur Utama
 
@@ -53,7 +53,7 @@ Mode ini sudah memiliki soal bawaan mengenai arsitektur CPU dan Register.
 * Masukkan nama Anda dan masuk ke dalam permainan.
 * Jawab setiap pertanyaan di setiap ruangan (Room) dengan memilih jawaban yang tepat berdasarkan cerita/petunjuk.
 
-![Gameplay Register CPU]([Tolong screenshot tampilan saat sedang bermain di dalam salah satu Room, memperlihatkan pertanyaan dan pilihan jawaban])
+![Gameplay Register CPU](./assets/gameplay.jpg)
 
 ### 2. Membuat Materi Sendiri (Create Custom)
 Anda bisa membuat soal kustom untuk pelajaran apa saja (Biologi, Sejarah, Bahasa, dll).
@@ -67,7 +67,7 @@ Anda bisa membuat soal kustom untuk pelajaran apa saja (Biologi, Sejarah, Bahasa
    * *(Opsional)* Anda juga bisa mengunggah file JSON untuk mengisi data ruangan secara otomatis.
 5. Klik **Save Package**.
 
-![Form Create Custom]([Tolong screenshot tampilan halaman Game Builder / saat sedang mengisi form pembuatan soal (Step 2 atau Step 3)])
+![Form Create Custom](./assets/builder.jpg)
 
 ### 3. Memainkan Materi Buatan Sendiri (Play Games)
 Setelah Anda menyimpan materi di tahap sebelumnya, materi tersebut akan tersimpan di Library browser Anda.
@@ -75,7 +75,7 @@ Setelah Anda menyimpan materi di tahap sebelumnya, materi tersebut akan tersimpa
 * Pilih paket game yang sudah Anda buat dari daftar Library.
 * Klik **Play** untuk mulai bermain menggunakan soal-soal Anda sendiri.
 
-![Library Play Games]([Tolong screenshot halaman Library yang menampilkan daftar paket game custom yang sudah dibuat])
+![Library Play Games](./assets/library.jpg)
 
 ---
 
@@ -87,14 +87,14 @@ Aplikasi ini dilengkapi dengan fitur pemantauan untuk guru dan animasi rasi bint
 * Guru dapat mengakses **Teacher Dashboard** untuk memantau progress siswa yang sedang bermain secara real-time.
 * Guru dapat mengatur **Video Password** yang nantinya harus dimasukkan oleh siswa jika mereka ingin melihat Video Constellation.
 
-![Teacher Dashboard]([Tolong screenshot tampilan Teacher Dashboard yang memperlihatkan list siswa dan pengaturan password video])
+![Teacher Dashboard](./assets/dashboard.jpg)
 
 **Bagi Siswa:**
 * Siswa dapat mengakses **Global Observation Mode** (Video Mode).
 * Siswa akan diminta memasukkan password yang diberikan oleh guru.
 * Setelah berhasil, siswa akan disuguhkan animasi pergerakan rasi bintang yang dimainkan secara otomatis (loop).
 
-![Video Observation Mode]([Tolong screenshot tampilan saat Video Observation Mode (animasi rasi bintang) sedang berputar])
+![Video Observation Mode](./assets/video.jpg)
 
 ---
 
