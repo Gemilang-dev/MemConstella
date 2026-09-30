@@ -100,6 +100,8 @@ Aplikasi ini dilengkapi dengan fitur pemantauan untuk guru dan animasi rasi bint
 
 ## 👩‍🏫 Cara Bermain di Kelas Bersama Siswa
 
+![Cara Bermain di Kelas](./assets/class.jpg)
+
 Saat mengimplementasikan permainan ini di dalam kelas, ada **2 pilihan skenario** yang bisa Anda (Guru) gunakan untuk menayangkan animasi *Video Constellation* (Rasi Bintang) agar selaras dengan permainan siswa:
 
 ### Opsi 1: Video di Layar Terpisah (Proyektor / Layar Utama Kelas)

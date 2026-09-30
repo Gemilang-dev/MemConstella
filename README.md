@@ -100,6 +100,8 @@ This application is equipped with monitoring features for teachers and constella
 
 ## 👩‍🏫 How to Play in Class with Students
 
+![How to Play in Class](./assets/class.jpg)
+
 When implementing this game in the classroom, there are **2 scenario options** that you (the Teacher) can use to display the *Video Constellation* animation so that it aligns with the students' game:
 
 ### Option 1: Video on a Separate Screen (Projector / Main Class Screen)
