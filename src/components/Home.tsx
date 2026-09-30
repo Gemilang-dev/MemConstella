@@ -50,7 +50,15 @@ export const Home: React.FC<HomeProps> = ({ onStart }) => {
       {/* Main Content Area */}
       <main className="relative z-10 flex-1 flex items-center justify-center p-6 pb-20">
         <div className="max-w-5xl w-full bg-[#111128]/60 backdrop-blur-xl p-10 md:p-14 rounded-[2.5rem] border border-white/5 shadow-[0_0_50px_rgba(59,130,246,0.1)] flex flex-col items-center gap-12">
-          
+          {/* Animated Banner */}
+          <div className="w-full max-w-[900px] mx-auto mb-2">
+            <img 
+              src="/memconstella-animated-900x360.gif" 
+              alt="MemConstella Banner" 
+              className="w-full h-auto rounded-[1.5rem] border border-white/10 shadow-2xl"
+            />
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
             {/* Card 1: Register CPU */}
             <button
