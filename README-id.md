@@ -2,6 +2,8 @@
 
 # MemConstella 🌌
 
+> **Inspirasi:** Aplikasi ini terinspirasi dari salah satu tantangan kognitif di acara **Clash of Champions (CoC) Ruangguru Season 2**, yaitu game **Galactic Trace** — di mana peserta ditantang menghafal dan memetakan pola rasi bintang di angkasa secara cepat dan presisi. MemConstella mengadaptasi konsep visual tersebut untuk membantu siswa mengingat dan memahami materi pelajaran dengan lebih menyenangkan!
+
 Game edukasi berbasis web di mana siswa memetakan topik teknis atau konseptual ke dalam rasi bintang interaktif. Awalnya didesain untuk mengajarkan Register CPU (PC, IR, MAR, MDR, ACC), aplikasi ini sekarang menjadi platform yang sepenuhnya dapat dikustomisasi! Pendidik dapat menggunakan materi Register CPU bawaan atau menggunakan **Game Builder** untuk membuat dan menyimpan paket pembelajaran mereka sendiri untuk mata pelajaran apa pun.
 
 ![Halaman Utama MemConstella](./assets/home.jpg)
@@ -26,20 +28,28 @@ Game edukasi berbasis web di mana siswa memetakan topik teknis atau konseptual k
 
 ---
 
-## 🚀 Memulai (Instalasi)
+## 🚀 Memulai (Instalasi & Tech Stack)
 
-**Prasyarat:** Node.js (v16+).
+### 📦 Prasyarat (Software yang Perlu Diinstal Terlebih Dahulu):
+1. **[Node.js](https://nodejs.org/)** (v18.0.0+ LTS direkomendasikan) — Termasuk package manager `npm`.
+2. **[Git](https://git-scm.com/downloads)** — Untuk mengkloning kode repositori.
+3. **Browser Modern** — Google Chrome, Microsoft Edge, atau Mozilla Firefox.
 
-1.  **Clone / Download Repository**
-2.  **Instal dependensi:**
-    ```bash
-    npm install
-    ```
-3.  **Jalankan aplikasi secara lokal:**
-    ```bash
-    npm run dev
-    ```
-4.  Buka `http://localhost:3000` di browser Anda.
+### 💻 Langkah-langkah Menjalankan:
+1. **Clone repositori:**
+   ```bash
+   git clone https://github.com/username/memconstella.git
+   cd memconstella
+   ```
+2. **Instal dependensi:**
+   ```bash
+   npm install
+   ```
+3. **Jalankan aplikasi secara lokal:**
+   ```bash
+   npm run dev
+   ```
+4. Buka `http://localhost:3000` di browser Anda.
 
 ---
 
@@ -104,11 +114,19 @@ Aplikasi ini dilengkapi dengan fitur pemantauan untuk guru dan animasi rasi bint
 
 Saat mengimplementasikan permainan ini di dalam kelas, ada **2 pilihan skenario** yang bisa Anda (Guru) gunakan untuk menayangkan animasi *Video Constellation* (Rasi Bintang) agar selaras dengan permainan siswa:
 
-### Opsi 1: Video di Layar Terpisah (Proyektor / Layar Utama Kelas)
-Opsi ini sangat ideal untuk permainan interaktif terpusat.
-1. **Persiapan Guru:** Guru membuka game di komputer yang tersambung ke proyektor di depan kelas. Guru masuk ke **Global Observation Mode** (Video Mode), memasukkan password, dan memutar animasinya secara *fullscreen* di proyektor. (Guru juga dapat mendownload videonya terlebih dahulu menggunakan fitur *Download Video*).
-2. **Aktivitas Siswa:** Siswa membuka aplikasi di perangkat mereka masing-masing (laptop/tablet/HP) dan langsung masuk ke permainan (tidak perlu masuk ke menu Video Mode).
-3. **Cara Bermain:** Siswa berdiskusi atau secara individu menjawab soal-soal di layar perangkat mereka **dengan berpatokan pada animasi rasi bintang yang terus berputar di proyektor depan kelas**. 
+### Opsi 1: Video di Layar Terpisah (Dual Display: Proyektor / Layar Eksternal)
+Opsi ini sangat ideal untuk permainan interaktif terpusat di dalam kelas.
+
+#### 📋 Apa Saja yang Perlu Disiapkan Sebelum Mulai:
+* **Wajib Ada 2 Layar:** Anda memerlukan 2 display, baik berupa **satu komputer/laptop dengan 2 layar** (layar monitor laptop/utama + monitor eksternal / proyektor kelas) atau perangkat terpisah.
+* **Fungsi Layar Utama (Monitor Laptop / PC):** Digunakan untuk **siswa menginput dan menjawab soal** (Room A, B, C, dan D).
+* **Fungsi Layar Eksternal / Proyektor:** Digunakan untuk **menampilkan dan memutar video rasi bintang** secara *fullscreen* dan berulang (*loop*) terus-menerus sebagai petunjuk visual bersama di depan kelas.
+* **Pengaturan Tampilan (Display Mode):** Sambungkan kabel HDMI/VGA, lalu pilih mode tampilan **"Extend"** (Bukan Duplicate) di sistem operasi agar kedua layar menampilkan konten yang berbeda secara mandiri.
+
+#### Langkah Pelaksanaan:
+1. **Persiapan Guru:** Guru menghubungkan proyektor ke komputer (mode Extend). Masuk ke menu **Teacher Dashboard** untuk mengatur Video Password jika diperlukan, lalu buka video rasi bintang dan geser ke layar proyektor dalam mode *fullscreen*.
+2. **Aktivitas Siswa:** Di layar utama (atau perangkat laptop/HP siswa masing-masing), siswa membuka stasiun Room A-D, memilih nama mereka, dan membaca pertanyaan misi.
+3. **Cara Bermain & Analisis:** Siswa menjawab pertanyaan di layar utama sambil terus berpatokan pada pergerakan animasi rasi bintang di proyektor depan kelas.
 
 ### Opsi 2: Video di Layar yang Sama (Perangkat Individu Siswa)
 Opsi ini cocok jika siswa belajar secara mandiri, jarak jauh (online), atau tidak tersedia fasilitas proyektor di kelas.
@@ -127,3 +145,11 @@ Opsi ini cocok jika siswa belajar secara mandiri, jarak jauh (online), atau tida
 *   Vite
 *   Tailwind CSS
 *   Lucide React (Icons)
+
+---
+
+## 📄 Lisensi
+
+Proyek ini dilisensikan di bawah **GNU General Public License v3.0 (GNU GPLv3)**. Lihat berkas [LICENSE](./LICENSE) untuk detail ketentuan lisensi secara lengkap.
+
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)

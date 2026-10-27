@@ -9,6 +9,7 @@ import {
 import { sound } from '../utils/audio';
 import { ConstellationVideo } from './ConstellationVideo';
 import { useGameData } from '../contexts/GameDataContext';
+import { useLanguage } from '../contexts/LanguageContext';
 import {
   User,
   CheckCircle2,
@@ -34,6 +35,7 @@ export const RoomStation: React.FC<RoomStationProps> = ({
   onQuizActiveChange
 }) => {
   const { gameData } = useGameData();
+  const { t, language } = useLanguage();
   const roomId = ROOM_MAPPING[roomNumber];
   const defaultTemplate = gameData.roomTemplates[roomNumber];
 
@@ -54,7 +56,7 @@ export const RoomStation: React.FC<RoomStationProps> = ({
   const handleVideoUnlock = () => {
     const correctPassword = getVideoPassword();
     if (!correctPassword) {
-      alert("Teacher has not set a video password yet. Please ask the teacher to set it in the Dashboard.");
+      alert(t.room.passwordEmptyAlert);
       return;
     }
     if (passwordInput === correctPassword) {
@@ -62,7 +64,7 @@ export const RoomStation: React.FC<RoomStationProps> = ({
       setPasswordPromptActive(false);
       setPasswordInput('');
     } else {
-      alert("Incorrect password!");
+      alert(t.room.passwordWrongAlert);
     }
   };
 

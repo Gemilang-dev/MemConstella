@@ -1,0 +1,8 @@
+{
+  "name": "Logo Glow Animator",
+  "description": "Create stunning animated logo videos with smooth color gradients and twinkling star effects effortlessly.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

@@ -1,5 +1,7 @@
 import React from 'react';
 import { AppArea } from '../types';
+import { useLanguage } from '../contexts/LanguageContext';
+import { LanguageSwitcher } from './LanguageSwitcher';
 import {
   Building,
   ShieldCheck,
@@ -24,10 +26,15 @@ export const HeaderNavigation: React.FC<HeaderNavigationProps> = ({
   onToggleMute,
   isQuizActive = false
 }) => {
+  const { t } = useLanguage();
+
   return (
     <header className="sticky top-0 z-40 bg-slate-950/90 backdrop-blur-md border-b border-slate-800/80 px-4 py-2.5 flex flex-wrap items-center justify-between gap-2 shadow-lg">
       {/* Brand Title */}
-      <div className="flex items-center gap-2.5">
+      <div 
+        onClick={() => !isQuizActive && onSelectArea('home')}
+        className={`flex items-center gap-2.5 ${!isQuizActive ? 'cursor-pointer hover:opacity-90' : ''}`}
+      >
         <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-blue-600 via-indigo-600 to-cyan-400 flex items-center justify-center text-white shadow-md shadow-blue-500/20">
           <Compass className="w-5 h-5 animate-[spin_12s_linear_infinite]" />
         </div>
@@ -41,7 +48,7 @@ export const HeaderNavigation: React.FC<HeaderNavigationProps> = ({
             </span>
           </div>
           <div className="text-[10px] text-slate-400 hidden sm:block">
-            Constellation Memory & CPU Register Missions
+            {t.common.appSubtitle}
           </div>
         </div>
       </div>
@@ -51,8 +58,8 @@ export const HeaderNavigation: React.FC<HeaderNavigationProps> = ({
         {isQuizActive && (
           <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-semibold animate-pulse">
             <Lock className="w-3.5 h-3.5 text-amber-400" />
-            <span className="hidden md:inline">Station Locked: Select & Lock Answer to Proceed</span>
-            <span className="md:hidden">Locked</span>
+            <span className="hidden md:inline">{t.nav.stationLocked}</span>
+            <span className="md:hidden">{t.nav.stationLockedShort}</span>
           </div>
         )}
 
@@ -69,10 +76,10 @@ export const HeaderNavigation: React.FC<HeaderNavigationProps> = ({
                 ? 'bg-blue-600 text-white shadow-md'
                 : 'text-slate-400 hover:text-white hover:bg-slate-800/60'
             }`}
-            title={isQuizActive ? 'Station locked during active quiz' : 'Open Room A'}
+            title={isQuizActive ? t.nav.stationLocked : 'Open Room A'}
           >
             <Building className="w-3.5 h-3.5" />
-            <span>Room A</span>
+            <span>{t.nav.roomA}</span>
           </button>
 
           {/* Room B */}
@@ -87,10 +94,10 @@ export const HeaderNavigation: React.FC<HeaderNavigationProps> = ({
                 ? 'bg-blue-600 text-white shadow-md'
                 : 'text-slate-400 hover:text-white hover:bg-slate-800/60'
             }`}
-            title={isQuizActive ? 'Station locked during active quiz' : 'Open Room B'}
+            title={isQuizActive ? t.nav.stationLocked : 'Open Room B'}
           >
             <Building className="w-3.5 h-3.5" />
-            <span>Room B</span>
+            <span>{t.nav.roomB}</span>
           </button>
 
           {/* Room C */}
@@ -105,10 +112,10 @@ export const HeaderNavigation: React.FC<HeaderNavigationProps> = ({
                 ? 'bg-blue-600 text-white shadow-md'
                 : 'text-slate-400 hover:text-white hover:bg-slate-800/60'
             }`}
-            title={isQuizActive ? 'Station locked during active quiz' : 'Open Room C'}
+            title={isQuizActive ? t.nav.stationLocked : 'Open Room C'}
           >
             <Building className="w-3.5 h-3.5" />
-            <span>Room C</span>
+            <span>{t.nav.roomC}</span>
           </button>
 
           {/* Room D */}
@@ -123,10 +130,10 @@ export const HeaderNavigation: React.FC<HeaderNavigationProps> = ({
                 ? 'bg-blue-600 text-white shadow-md'
                 : 'text-slate-400 hover:text-white hover:bg-slate-800/60'
             }`}
-            title={isQuizActive ? 'Station locked during active quiz' : 'Open Room D'}
+            title={isQuizActive ? t.nav.stationLocked : 'Open Room D'}
           >
             <Building className="w-3.5 h-3.5" />
-            <span>Room D</span>
+            <span>{t.nav.roomD}</span>
           </button>
 
           <div className="h-4 w-px bg-slate-800 mx-0.5" />
@@ -143,21 +150,23 @@ export const HeaderNavigation: React.FC<HeaderNavigationProps> = ({
                 ? 'bg-amber-600 text-white shadow-md'
                 : 'text-amber-400/80 hover:text-amber-300 hover:bg-slate-800/60'
             }`}
-            title={isQuizActive ? 'Station locked during active quiz' : 'Open Teacher Monitor Dashboard'}
+            title={isQuizActive ? t.nav.stationLocked : 'Open Teacher Monitor Dashboard'}
           >
             <ShieldCheck className="w-3.5 h-3.5" />
-            <span>Dashboard</span>
+            <span>{t.nav.dashboard}</span>
           </button>
         </nav>
       </div>
 
-      {/* Utility Audio Mute */}
-      <div className="flex items-center gap-1.5">
+      {/* Utilities: Language Switcher & Audio Mute */}
+      <div className="flex items-center gap-2">
+        <LanguageSwitcher />
+
         <button
           id="nav-btn-audio-mute"
           onClick={onToggleMute}
           className="p-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-400 hover:text-white transition-colors"
-          title={isMuted ? 'Unmute Sound FX' : 'Mute Sound FX'}
+          title={isMuted ? t.nav.unmuteSound : t.nav.muteSound}
         >
           {isMuted ? <VolumeX className="w-4 h-4 text-rose-400" /> : <Volume2 className="w-4 h-4 text-cyan-400" />}
         </button>

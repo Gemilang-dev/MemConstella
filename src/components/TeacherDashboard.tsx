@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { StudentRecord, RoomNumber, ROOM_MAPPING } from '../types';
 import { useGameData } from '../contexts/GameDataContext';
+import { useLanguage } from '../contexts/LanguageContext';
 import {
   loadAllStudentRecords,
   resetStudentProgress,
@@ -32,6 +33,7 @@ export const TeacherDashboard: React.FC<TeacherDashboardProps> = ({
   onGoToRoom
 }) => {
   const { gameData } = useGameData();
+  const { t } = useLanguage();
   const [records, setRecords] = useState<Record<string, StudentRecord>>({});
   const [searchQuery, setSearchQuery] = useState('');
   const [filterMode, setFilterMode] = useState<'all' | 'full_points' | 'in_progress'>('all');
@@ -50,14 +52,14 @@ export const TeacherDashboard: React.FC<TeacherDashboardProps> = ({
   }, []);
 
   const handleResetSingle = (name: string) => {
-    if (confirm(`Reset all room progress for student: ${name}?`)) {
+    if (confirm(`${t.dashboard.resetSingleConfirm}${name}?`)) {
       resetStudentProgress(name);
       refresh();
     }
   };
 
   const handleResetAll = () => {
-    if (confirm('CAUTION: Are you sure you want to reset ALL student progress across all 4 rooms?')) {
+    if (confirm(t.dashboard.resetAllConfirm)) {
       resetAllGameData();
       refresh();
     }

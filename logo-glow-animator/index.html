@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="id" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      // Safeguard for environments/wrappers attempting to assign to window.fetch
+      (function() {
+        try {
+          var _origFetch = window.fetch;
+          var _currentFetch = _origFetch;
+          Object.defineProperty(window, 'fetch', {
+            get: function() {
+              return _currentFetch;
+            },
+            set: function(fn) {
+              _currentFetch = fn;
+            },
+            configurable: true,
+            enumerable: true
+          });
+        } catch (e) {
+          // Fallback if window defineProperty fails
+          try {
+            var proto = Window.prototype;
+            var _protoFetch = proto.fetch;
+            Object.defineProperty(proto, 'fetch', {
+              get: function() {
+                return _protoFetch;
+              },
+              set: function(fn) {
+                _protoFetch = fn;
+              },
+              configurable: true,
+              enumerable: true
+            });
+          } catch (e2) {}
+        }
+      })();
+    </script>
+    <title>Logo Glow Animator — Animated Logo Video, GIF & Standalone HTML</title>
+    <meta name="description" content="Create stunning animated logo videos with smooth color gradients and twinkling star effects effortlessly." />
+    <meta property="og:title" content="Logo Glow Animator — Animated Logo Video, GIF & Standalone HTML" />
+    <meta property="og:description" content="Create stunning animated logo videos with smooth color gradients and twinkling star effects effortlessly." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Syne:wght@600;700;800&display=swap" rel="stylesheet" />
+  </head>
+  <body class="bg-[#07090E] text-slate-100 antialiased selection:bg-cyan-500/30 selection:text-cyan-200">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

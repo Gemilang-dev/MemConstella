@@ -2,6 +2,8 @@
 
 # MemConstella 🌌
 
+> **Inspiration:** This application is inspired by the cognitive visual challenge **Galactic Trace** from **Ruangguru's Clash of Champions (CoC) Season 2** — where brilliant champions memorized and mapped star coordinates across celestial constellations. MemConstella brings that excitement into classrooms to make learning and memorizing complex academic topics engaging and intuitive!
+
 A web-based educational game where students map technical or conceptual topics to interactive star constellations. Originally designed to teach CPU Registers (PC, IR, MAR, MDR, ACC), this application is now a fully customizable platform! Educators can use the built-in CPU Register materials or use the **Game Builder** to create and save their own learning packages for any subject.
 
 ![MemConstella Home Screen](./assets/home.jpg)
@@ -26,20 +28,28 @@ A web-based educational game where students map technical or conceptual topics t
 
 ---
 
-## 🚀 Getting Started
+## 🚀 Getting Started (Installation & Tech Stack)
 
-**Prerequisites:** Node.js (v16+).
+### 📦 Prerequisites (Software to Install First):
+1. **[Node.js](https://nodejs.org/)** (v18.0.0+ LTS recommended) — Includes the `npm` package manager.
+2. **[Git](https://git-scm.com/downloads)** — To clone the project repository.
+3. **Modern Web Browser** — Google Chrome, Microsoft Edge, or Mozilla Firefox.
 
-1.  **Clone / Download Repository**
-2.  **Install dependencies:**
-    ```bash
-    npm install
-    ```
-3.  **Run the app locally:**
-    ```bash
-    npm run dev
-    ```
-4.  Open `http://localhost:3000` in your browser.
+### 💻 Step-by-Step Local Setup:
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/username/memconstella.git
+   cd memconstella
+   ```
+2. **Install dependencies:**
+   ```bash
+   npm install
+   ```
+3. **Run the local development server:**
+   ```bash
+   npm run dev
+   ```
+4. Open `http://localhost:3000` in your web browser.
 
 ---
 
@@ -104,11 +114,19 @@ This application is equipped with monitoring features for teachers and constella
 
 When implementing this game in the classroom, there are **2 scenario options** that you (the Teacher) can use to display the *Video Constellation* animation so that it aligns with the students' game:
 
-### Option 1: Video on a Separate Screen (Projector / Main Class Screen)
-This option is highly ideal for centralized interactive play.
-1. **Teacher Preparation:** The teacher opens the game on the computer connected to the projector at the front of the class. The teacher enters the **Global Observation Mode** (Video Mode), enters the password, and plays the animation *fullscreen* on the projector. (The teacher can also download the video beforehand using the *Download Video* feature).
-2. **Student Activity:** Students open the application on their respective devices (laptop/tablet/smartphone) and go straight into the game (no need to enter the Video Mode menu).
-3. **How to Play:** Students discuss or individually answer the questions on their device screens **by using the constellation animation that continuously plays on the front projector as a guide**.
+### Option 1: Video on a Separate Screen (Dual Display: Projector / External Screen)
+This option is highly ideal for centralized interactive play in the classroom.
+
+#### 📋 What Needs to be Prepared Before Starting:
+* **2 Screens Required:** You must have 2 displays ready, which can be **one computer/laptop with 2 screens** (main laptop/PC monitor + external monitor or classroom projector) or separate devices.
+* **Primary Screen Role (Laptop / PC Monitor):** Used for **students to input and answer questions** (Room A, B, C, and D).
+* **External Screen / Projector Role:** Used to **display and loop the constellation animation video** in *fullscreen* continuously as a shared visual reference for the whole class.
+* **Display Configuration Tip:** Connect the HDMI/VGA cable, then configure your operating system to **"Extend"** (Not Duplicate) so that both screens can display independent windows.
+
+#### Implementation Steps:
+1. **Teacher Setup:** The teacher connects the computer to the projector (Extend mode). Go to the **Teacher Dashboard** to set the Video Password if needed, open the Constellation Video, and drag it to the projector screen in *fullscreen*.
+2. **Student Activity:** On the primary screen (or on individual student devices), students open Room A-D, choose their name, and read the mission questions.
+3. **Gameplay & Analysis:** Students answer questions on the primary screen while actively observing the looping constellation animations on the classroom projector screen.
 
 ### Option 2: Video on the Same Screen (Student's Individual Device)
 This option is suitable if students are learning independently, remotely (online), or if projector facilities are unavailable in class.
@@ -127,3 +145,11 @@ This option is suitable if students are learning independently, remotely (online
 *   Vite
 *   Tailwind CSS
 *   Lucide React (Icons)
+
+---
+
+## 📄 License
+
+This project is licensed under the **GNU General Public License v3.0 (GNU GPLv3)**. See the [LICENSE](./LICENSE) file for complete details.
+
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
